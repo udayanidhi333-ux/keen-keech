@@ -1,0 +1,445 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+
+<div class="max-w-5xl mx-auto px-5 pt-28 pb-24">
+
+    <!-- HEADER -->
+
+    <div class="mb-12">
+
+        <p class="text-[10px] tracking-[6px] uppercase text-orange-400 mb-3">
+            KEEN | KEECH
+        </p>
+
+        <h1 class="text-3xl md:text-4xl font-semibold tracking-[4px] uppercase text-white">
+            Your Shopping Tray
+        </h1>
+
+        <div class="w-16 h-[2px] bg-orange-500 mt-5"></div>
+
+    </div>
+
+
+    {% if cart_items %}
+
+    <!-- CART ITEMS -->
+
+    <div class="space-y-5">
+
+        {% for item in cart_items %}
+
+        <div class="group relative
+                    flex flex-col sm:flex-row
+                    items-start sm:items-center
+                    gap-5 sm:gap-8
+                    p-5 sm:p-6
+                    rounded-2xl
+                    bg-[#111216]
+                    border border-white/[0.06]
+                    hover:border-orange-500/30
+                    transition-all duration-500">
+
+
+            <!-- PRODUCT IMAGE -->
+
+            <div class="relative
+                        w-24 h-28
+                        sm:w-28 sm:h-32
+                        flex-shrink-0
+                        rounded-xl
+                        overflow-hidden
+                        bg-[#08090c]
+                        border border-white/[0.06]">
+
+                {% if item.product.image %}
+
+                <img
+                    src="{{ item.product.image.url }}"
+                    alt="{{ item.product.name }}"
+                    class="w-full h-full object-cover
+                           transition duration-700
+                           group-hover:scale-105">
+
+                {% else %}
+
+                <div class="w-full h-full flex items-center justify-center
+                            text-[9px] uppercase tracking-widest text-neutral-600">
+
+                    No Image
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- PRODUCT DETAILS -->
+
+            <div class="flex-1 min-w-0">
+
+                <h3 class="text-sm sm:text-base
+                           font-medium
+                           tracking-wide
+                           text-white
+                           leading-6">
+
+                    {{ item.product.name }}
+
+                </h3>
+
+
+                {% if item.product.product_code %}
+
+                <p class="text-[10px]
+                          uppercase
+                          tracking-[2px]
+                          text-neutral-500
+                          mt-2">
+
+                    Code:
+                    <span class="text-neutral-300">
+                        {{ item.product.product_code }}
+                    </span>
+
+                </p>
+
+                {% endif %}
+
+
+                {% if item.size %}
+
+                <p class="text-xs text-neutral-400 mt-2">
+
+                    Size:
+                    <span class="text-orange-400 font-medium">
+                        {{ item.size }}
+                    </span>
+
+                </p>
+
+                {% endif %}
+
+
+                <p class="text-sm text-orange-400 mt-3 font-medium">
+
+                    ₹{{ item.product.price }}
+
+                    <span class="text-[10px] text-neutral-500">
+                        each
+                    </span>
+
+                </p>
+
+
+                <a
+                    href="{% url 'remove_from_cart' item.id %}"
+                    class="inline-block
+                           mt-4
+                           text-[10px]
+                           uppercase
+                           tracking-[2px]
+                           text-neutral-500
+                           hover:text-red-400
+                           transition">
+
+                    Remove item
+
+                </a>
+
+            </div>
+
+
+            <!-- QUANTITY -->
+
+            <div class="flex items-center
+                        border border-white/[0.08]
+                        rounded-xl
+                        overflow-hidden
+                        bg-[#0b0c10]">
+
+                <form method="POST"
+                      action="{% url 'decrease_quantity' item.id %}">
+
+                    {% csrf_token %}
+
+                    <button
+                        type="submit"
+                        class="w-10 h-10
+                               text-lg
+                               text-neutral-400
+                               hover:text-orange-400
+                               hover:bg-white/[0.04]
+                               transition">
+
+                        −
+
+                    </button>
+
+                </form>
+
+
+                <span class="w-10 h-10
+                             flex items-center justify-center
+                             text-sm
+                             text-white
+                             border-x border-white/[0.08]">
+
+                    {{ item.quantity }}
+
+                </span>
+
+
+                <form method="POST"
+                      action="{% url 'increase_quantity' item.id %}">
+
+                    {% csrf_token %}
+
+                    <button
+                        type="submit"
+                        class="w-10 h-10
+                               text-lg
+                               text-orange-400
+                               hover:bg-orange-500/10
+                               transition">
+
+                        +
+
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            <!-- SUBTOTAL -->
+
+            <div class="sm:w-32
+                        sm:text-right
+                        flex
+                        sm:block
+                        items-center
+                        justify-between
+                        w-full
+                        border-t
+                        sm:border-0
+                        border-white/[0.06]
+                        pt-4
+                        sm:pt-0">
+
+                <span class="block
+                             text-[9px]
+                             uppercase
+                             tracking-[2px]
+                             text-neutral-500
+                             mb-2">
+
+                    Subtotal
+
+                </span>
+
+
+                <span class="text-lg
+                             font-semibold
+                             text-orange-400">
+
+                    ₹{{ item.product.price|floatformat:2 }}
+
+                </span>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    <!-- SUMMARY -->
+
+    <div class="mt-12
+                flex
+                flex-col
+                lg:flex-row
+                lg:items-end
+                lg:justify-between
+                gap-8
+                pt-8
+                border-t
+                border-white/[0.08]">
+
+
+        <!-- CONTINUE SHOPPING -->
+
+        <a
+            href="{% url 'home' %}"
+            class="inline-flex
+                   items-center
+                   gap-3
+                   text-[10px]
+                   uppercase
+                   tracking-[3px]
+                   text-neutral-400
+                   hover:text-orange-400
+                   transition">
+
+            <span class="text-lg">←</span>
+
+            Continue Shopping
+
+        </a>
+
+
+        <!-- TOTAL -->
+
+        <div class="w-full lg:w-auto">
+
+            <div class="flex
+                        items-center
+                        justify-between
+                        lg:justify-end
+                        gap-10
+                        mb-6">
+
+                <span class="text-xs
+                             uppercase
+                             tracking-[3px]
+                             text-neutral-500">
+
+                    Tray Total
+
+                </span>
+
+
+                <span class="text-3xl
+                             font-semibold
+                             text-orange-400">
+
+                    ₹{{ total_price }}
+
+                </span>
+
+            </div>
+
+
+            <!-- CHECKOUT -->
+
+            <a
+                href="{% url 'proceed_to_checkout' %}"
+                class="group relative
+                       w-full
+                       lg:w-72
+                       h-14
+                       flex
+                       items-center
+                       justify-center
+                       overflow-hidden
+                       rounded-xl
+                       bg-orange-500
+                       text-black
+                       font-semibold
+                       text-xs
+                       uppercase
+                       tracking-[3px]
+                       shadow-[0_0_25px_rgba(249,115,22,0.12)]
+                       hover:shadow-[0_0_35px_rgba(249,115,22,0.35)]
+                       hover:bg-orange-400
+                       transition-all
+                       duration-500">
+
+                <span class="relative z-10">
+
+                    Proceed to Checkout
+
+                </span>
+
+                <span class="absolute
+                             right-6
+                             text-lg
+                             transition-transform
+                             duration-300
+                             group-hover:translate-x-1">
+
+                    →
+
+                </span>
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    {% else %}
+
+
+    <!-- EMPTY TRAY -->
+
+    <div class="relative
+                py-24
+                text-center
+                rounded-3xl
+                bg-[#111216]
+                border
+                border-dashed
+                border-white/[0.1]">
+
+
+        <div class="text-5xl mb-6 opacity-30">
+            🛒
+        </div>
+
+
+        <h2 class="text-xl
+                   uppercase
+                   tracking-[3px]
+                   text-neutral-300">
+
+            Your Shopping Tray Is Empty
+
+        </h2>
+
+
+        <p class="text-sm text-neutral-500 mt-4">
+
+            Discover something worth wearing.
+
+        </p>
+
+
+        <a
+            href="{% url 'home' %}"
+            class="inline-flex
+                   items-center
+                   gap-3
+                   mt-8
+                   px-7
+                   py-3
+                   rounded-xl
+                   border
+                   border-orange-500/40
+                   text-orange-400
+                   text-[10px]
+                   uppercase
+                   tracking-[3px]
+                   hover:bg-orange-500
+                   hover:text-black
+                   transition">
+
+            Explore Collection
+
+            <span>→</span>
+
+        </a>
+
+    </div>
+
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

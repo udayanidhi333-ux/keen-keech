@@ -1,0 +1,253 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="max-w-5xl mx-auto px-4 sm:px-6 py-8 md:py-12">
+
+    <!-- PAGE HEADER -->
+
+    <div class="mb-8">
+
+        <h1 class="text-2xl md:text-3xl font-medium text-white tracking-wide">
+                      
+        </h1>
+
+        <p class="text-sm text-neutral-500 mt-2">
+            
+        </p>
+
+    </div>
+
+
+    {% if orders %}
+
+    <!-- ORDER LIST -->
+
+    <div class="space-y-3">
+
+        {% for order in orders %}
+
+        <!-- ORDER ROW -->
+
+        <div class="group bg-[#111111] border border-neutral-800 rounded-xl
+                    hover:border-orange-500/50 transition duration-300">
+
+
+            <div class="flex flex-col md:flex-row md:items-center gap-5 p-4 sm:p-5">
+
+
+                <!-- ORDER INFO -->
+
+                <div class="md:w-44 flex-shrink-0">
+
+                    <p class="text-sm font-medium text-orange-400">
+                        {{ order.order_number }}
+                    </p>
+
+                    <p class="text-xs text-neutral-500 mt-1">
+                        {{ order.created_at|date:"d M Y" }}
+                    </p>
+
+                </div>
+
+
+                <!-- PRODUCT PREVIEWS -->
+
+                <div class="flex items-center flex-1 min-w-0">
+
+                    <div class="flex -space-x-3">
+
+                        {% for item in order.items.all %}
+
+                        {% if forloop.counter <= 3 %}
+
+                        <img
+                            src="{{ item.product.image.url }}"
+                            alt="{{ item.product.name }}"
+                            class="w-14 h-16 sm:w-16 sm:h-20 object-cover rounded-lg border-2 border-[#111111]">
+
+                        {% endif %}
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- PRODUCT NAMES -->
+
+                    <div class="ml-5 min-w-0">
+
+                        {% for item in order.items.all %}
+
+                        {% if forloop.first %}
+
+                        <p class="text-sm text-white truncate">
+                            {{ item.product.name }}
+
+                            {% if order.items.count > 1 %}
+                                <span class="text-neutral-500">
+                                    + {{ order.items.count|add:"-1" }} more
+                                </span>
+                            {% endif %}
+
+                        </p>
+
+                        {% endif %}
+
+                        {% endfor %}
+
+                        <p class="text-xs text-neutral-500 mt-1">
+                            {{ order.items.count }} item{{ order.items.count|pluralize }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STATUS -->
+
+                <div class="md:w-28">
+
+                    <span class="inline-flex items-center gap-2 text-xs
+
+                        {% if order.status == 'Delivered' %}
+                            text-green-400
+
+                        {% elif order.status == 'Cancelled' %}
+                            text-red-400
+
+                        {% else %}
+                            text-orange-400
+
+                        {% endif %}">
+
+                        <span class="w-1.5 h-1.5 rounded-full
+
+                            {% if order.status == 'Delivered' %}
+                                bg-green-400
+
+                            {% elif order.status == 'Cancelled' %}
+                                bg-red-400
+
+                            {% else %}
+                                bg-orange-400
+
+                            {% endif %}">
+                        </span>
+
+                        {{ order.status }}
+
+                    </span>
+
+                </div>
+
+
+                <!-- TOTAL -->
+
+                <div class="md:w-28">
+
+                    <p class="text-[10px] uppercase tracking-wider text-neutral-600">
+                        Total
+                    </p>
+
+                    <p class="text-sm font-semibold text-white mt-1">
+                        ₹{{ order.total_amount }}
+                    </p>
+
+                </div>
+
+
+                <!-- VIEW ORDER -->
+
+                <a
+                    href="{% url 'order_detail' order.order_number %}"
+                    class="flex items-center justify-center w-10 h-10 rounded-full
+                           border border-neutral-700
+                           text-neutral-400
+                           hover:bg-orange-500
+                           hover:border-orange-500
+                           hover:text-black
+                           transition duration-300">
+
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-4 h-4">
+
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+
+                    </svg>
+
+                </a>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    {% else %}
+
+
+    <!-- EMPTY STATE -->
+
+    <div class="flex flex-col items-center justify-center text-center py-24">
+
+        <div class="w-16 h-16 rounded-full border border-neutral-800
+                    flex items-center justify-center">
+
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-7 h-7 text-neutral-600">
+
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.2 5h11.4"/>
+
+            </svg>
+
+        </div>
+
+
+        <h2 class="text-xl text-white mt-5">
+            No Orders Yet
+        </h2>
+
+        <p class="text-sm text-neutral-500 mt-2">
+            Your purchases will appear here.
+        </p>
+
+
+        <a
+            href="{% url 'home' %}#collection"
+            class="mt-6 px-6 py-3 rounded-lg bg-orange-500
+                   text-black text-sm font-semibold
+                   hover:bg-orange-400 transition">
+
+            Shop Now
+
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

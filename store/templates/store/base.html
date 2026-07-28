@@ -1,0 +1,630 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keen Keech | Waist & Collar</title>
+    
+    <!-- STABLE TAILWIND PRODUCTION PLATFORM -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * { box-sizing: border-box; }
+        body, html { overflow-x: hidden; width: 100%; margin: 0; padding: 0; }
+        
+        /* Mobile Specific Overrides */
+        @media screen and (max-width:768px){
+
+            main{
+                padding:0 0 80px 0 !important;
+            }
+
+        }
+            
+            /* Make sure text elements stay within device boundaries */
+            h1, h2, .brand-title {
+                word-wrap: break-word !important;
+                white-space: normal !important;
+            }
+
+                /* ========================= */
+        /* TRENDING MARQUEE */
+        /* ========================= */
+
+        .marquee{
+            overflow:hidden;
+            width:100%;
+        }
+
+        .marquee-content{
+            display:flex;
+            width:max-content;
+            animation:scrollLeft 35s linear infinite;
+        }
+
+        .marquee-item{
+            flex:none;
+            margin-right:24px;
+        }
+
+        .marquee-item img{
+            width:220px;
+            height:300px;
+            object-fit:cover;
+            border-radius:22px;
+            transition:.4s;
+            box-shadow:0 10px 30px rgba(0,0,0,.35);
+        }
+
+        .marquee-item img:hover{
+            transform:scale(1.05);
+        }
+
+        /* Premium Typography */
+
+        body{
+            font-family:'Manrope',sans-serif;
+        }
+
+        h1,h2,h3,h4,h5,h6{
+            font-family:'Sora',sans-serif;
+        }
+
+        .product-title{
+            font-family:'Sora',sans-serif;
+            font-weight:600;
+        }
+
+        .price{
+            font-family:'Sora',sans-serif;
+            font-weight:600;
+        }
+
+        .button-text{
+            font-family:'Manrope',sans-serif;
+            letter-spacing:1px;
+        }
+
+        .group{
+            transition:0.35s ease;
+        }
+
+        .group:hover{
+            transform:translateY(-6px);
+        }
+
+        .group img{
+            transition:0.7s ease;
+        }
+         
+        @keyframes scrollLeft{
+
+            from{
+                transform:translateX(0);
+            }
+
+            to{
+                transform:translateX(-50%);
+            }
+
+        }    
+
+    </style> 
+</head>
+<body class="bg-[#0b0c10] text-neutral-100 min-h-screen font-sans dynamic-nav-space">
+
+<!-- PREMIUM HEADER -->
+<header
+id="siteHeader"
+class="fixed top-0 left-0 w-full z-50
+bg-transparent
+border-0
+transition-all duration-500">
+
+    <div class="relative flex items-center justify-between px-5 py-4">
+
+        <!-- LEFT MENU BUTTON -->
+        <button id="menuButton"
+                class="text-white text-3xl leading-none">
+
+            ☰
+
+        </button>
+
+
+        <!-- CENTER LOGO -->
+
+        <a href="{% url 'home' %}"
+           class="absolute left-1/2 -translate-x-1/2 flex flex-col items-center text-center">
+
+            <span
+            style="
+            font-family:'Cinzel',serif;
+            background:linear-gradient(to bottom,#ffb366,#ff7a29,#e65100);
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;"
+            class="text-xl md:text-3xl font-bold tracking-[3px] whitespace-nowrap">
+
+                KEEN | KEECH
+
+            </span>
+ 
+
+            <span class="text-[8px] md:text-[10px] tracking-[6px] text-[#ffad66] uppercase">
+
+                waist & collar
+
+            </span>
+
+        </a>
+
+
+
+        <!-- RIGHT CART -->
+
+        <a href="{% url 'cart_detail' %}"
+           class="relative text-2xl">
+
+            🛒
+
+
+            {% if cart_item_count %}
+
+            <span
+            class="absolute -top-2 -right-3 
+                   bg-orange-500 
+                   text-black 
+                   rounded-full 
+                   w-5 h-5 
+                   flex items-center justify-center 
+                   text-[10px] 
+                   font-bold">
+
+                {{ cart_item_count }}
+
+            </span>
+
+            {% endif %}
+
+
+        </a>
+
+
+    </div>
+
+
+</header>
+    <!-- PREMIUM HIGH-ACCESSIBILITY MOBILE BOTTOM NAVIGATION NAV BAR -->
+    <!-- PREMIUM MOBILE BOTTOM NAVIGATION -->
+            <div class="fixed bottom-0 left-0 w-full bg-[#0d0e12]/95 backdrop-blur-md border-t border-neutral-800 z-50 flex items-center justify-around py-3 px-2 md:hidden">
+
+            <!-- Home -->
+            <a href="{% url 'home' %}" class="flex flex-col items-center text-neutral-400 hover:text-orange-400 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M2.25 12l8.954-8.955a1.125 1.125 0 011.591 0L21.75 12M4.5 9.75V20.25A1.5 1.5 0 006 21.75h12a1.5 1.5 0 001.5-1.5V9.75"/>
+                </svg>
+                <span class="text-[10px] mt-1">Home</span>
+            </a>
+
+            <!-- Shop -->
+            <a href="{% url 'home' %}#collection" class="flex flex-col items-center text-neutral-400 hover:text-orange-400 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 6v12m6-6H6"/>
+                </svg>
+                <span class="text-[10px] mt-1">Shop</span>
+            </a>
+
+           <!-- Orders -->
+            <a href="{% url 'customer_orders' %}" class="flex flex-col items-center text-neutral-400 hover:text-orange-400 transition">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                    class="w-5 h-5">
+
+                    <path stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M8.25 6.75h12M8.25 12h12M8.25 17.25h12M3.75 6.75h.008v.008H3.75V6.75zm0 5.25h.008v.008H3.75V12zm0 5.25h.008v.008H3.75v-.008z"/>
+
+                </svg>
+
+                <span class="text-[10px] mt-1">Orders</span>
+
+            </a>
+            <!-- Wishlist -->
+            <a href="{% url 'wishlist' %}" class="flex flex-col items-center text-neutral-400 hover:text-orange-400 transition">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                    class="w-5 h-5">
+
+                    <path stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 20.364 4.318 12.682a4.5 4.5 0 010-6.364z"/>
+
+                </svg>
+
+                <span class="text-[10px] mt-1">Wishlist</span>
+
+            </a>
+
+        <!-- Account -->
+
+        <a href="{% if user.is_authenticated %}{% url 'account' %}{% else %}{% url 'login' %}{% endif %}"
+        class="flex flex-col items-center text-neutral-400 hover:text-orange-400 transition">
+        
+        <svg xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+        stroke="currentColor"
+        class="w-5 h-5">
+
+        <path stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M15.75 6.75a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/>
+
+        <path stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M4.5 20.25a7.5 7.5 0 0115 0"/>
+
+        </svg>
+
+
+        <span class="text-[10px] mt-1">
+
+        Account
+
+        </span>
+
+
+        </a>
+
+        </div>
+    
+    
+    <!-- MAIN VIEW AREA ATTACHMENT HUB -->
+    <!-- MAIN VIEW AREA -->
+    <main class="pb-28 md:pb-12">
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+    <!-- WHATSAPP FLOATING MODULE -->
+    <a href="https://wa.me/919952135631?text=Hello%20Keen%20Keech%20Support!%20I%20have%20a%20question%20regarding%20my%20order" 
+       target="_blank" 
+       style="position: fixed; bottom: 75px; right: 20px; z-index: 9999;"
+       class="bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-2xl transition-transform active:scale-95 md:bottom-8 md:right-8 md:w-16 md:h-16">
+        <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor">
+            <path d="M12.004 0C5.378 0 0 5.378 0 12.004c0 2.117.554 4.106 1.61 5.85L.057 24l6.305-1.654a11.947 11.947 0 005.642 1.42c6.626 0 12.004-5.379 12.004-12.005C24.008 5.378 18.63 0 12.004 0zm6.59 14.8c-.29-.145-1.71-.845-1.975-.941-.266-.096-.46-.145-.652.145-.192.291-.744.941-.912 1.133-.168.193-.336.217-.626.072-.29-.145-1.226-.452-2.335-1.442-.863-.77-1.445-1.721-1.614-2.012-.168-.291-.018-.448.127-.592.13-.13.29-.337.435-.507.145-.17.193-.29.29-.483.097-.193.048-.361-.024-.507-.072-.145-.652-1.573-.893-2.152-.234-.564-.473-.488-.652-.497-.169-.008-.361-.01-.554-.01-.193 0-.507.072-.772.361-.266.291-1.014.992-1.014 2.42 0 1.427 1.038 2.808 1.182 3.002.145.193 2.043 3.12 4.95 4.373.691.298 1.231.476 1.653.61.694.22 1.326.19 1.825.115.556-.083 1.71-.699 1.952-1.373.242-.675.242-1.253.17-1.373-.072-.12-.266-.192-.556-.337z"/>
+        </svg>
+    </a>
+
+ <script>
+const searchInput = document.getElementById("search-input");
+
+if (searchInput) {
+
+    searchInput.addEventListener("keyup", function () {
+
+        const query = this.value;
+
+        const category = new URLSearchParams(window.location.search).get("category") || "";
+
+        fetch(`/search/?q=${encodeURIComponent(query)}&category=${category}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("product-grid").innerHTML = data.html;
+            });
+
+    });
+
+}
+</script>
+
+<!-- MENU OVERLAY -->
+
+<div id="menuOverlay"
+     class="fixed inset-0 bg-black/60 hidden z-[998]">
+</div>
+<!-- MOBILE SIDE MENU -->
+
+<div id="mobileMenu"
+     class="fixed top-0 left-0 w-80 h-full bg-[#0b0c10]
+            shadow-2xl transform -translate-x-full
+            transition-all duration-500 ease-in-out
+            z-[999]">
+
+    <div class="p-6">
+
+        <!-- MENU HEADER -->
+
+        <div class="flex justify-between items-center mb-8">
+
+            <div>
+
+                <h2 class="text-lg font-bold text-orange-400 tracking-widest">
+                    KEEN | KEECH
+                </h2>
+
+                <p class="text-[10px] tracking-[4px] text-neutral-400">
+                    WAIST & COLLAR
+                </p>
+
+            </div>
+
+            <button id="closeMenu"
+                    class="text-3xl text-neutral-300">
+                ×
+            </button>
+
+        </div>
+
+
+        <!-- CATEGORIES -->
+
+        <button id="categoryToggle"
+                class="w-full flex justify-between py-4 border-b border-neutral-800 hover:text-orange-400">
+
+            <span>
+                🛍 Categories
+            </span>
+
+            <span>
+                ⌄
+            </span>
+
+        </button>
+
+
+        <div id="categoryList"
+            class="hidden pl-5 text-neutral-300">
+
+
+            <a href="?category=shirts"
+            class="block py-2 hover:text-orange-400">
+                Shirts
+            </a>
+
+
+            <a href="?category=tshirts"
+            class="block py-2 hover:text-orange-400">
+                T-Shirts
+            </a>
+
+
+            <a href="?category=trousers"
+            class="block py-2 hover:text-orange-400">
+                Trousers
+            </a>
+
+
+            <a href="?category=jeans"
+            class="block py-2 hover:text-orange-400">
+                Jeans
+            </a>
+
+
+            <a href="?category=shorts"
+            class="block py-2 hover:text-orange-400">
+                Shorts
+            </a>
+
+
+            <a href="?category=blazers"
+            class="block py-2 hover:text-orange-400">
+                Blazers
+            </a>
+
+
+            <a href="?category=jackets"
+            class="block py-2 hover:text-orange-400">
+                Jackets
+            </a>
+
+
+        </div>
+
+        
+        <!-- MY ORDERS -->
+
+        <a href="{% url 'customer_orders' %}"
+        class="block py-4 border-b border-neutral-800 hover:text-orange-400">
+
+            📦 My Orders
+
+        </a>
+
+
+        <!-- WISHLIST -->
+
+        <a href="{% url 'wishlist' %}"
+        class="block py-4 border-b border-neutral-800 hover:text-orange-400">
+
+            ❤️ Wishlist
+
+        </a>
+
+
+        <!-- ACCOUNT -->
+
+        <a href="{% if user.is_authenticated %}{% url 'account' %}{% else %}{% url 'login' %}{% endif %}"
+        class="block py-4 border-b border-neutral-800 hover:text-orange-400">
+
+            👤 Account
+
+        </a>
+
+
+
+        <!-- WHATSAPP COMMUNITY -->
+
+        <a href="#"
+        class="block py-4 border-b border-neutral-800 hover:text-green-400">
+
+            <span class="mr-3 text-lg">◉</span>
+            WhatsApp Community           
+
+        </a>
+
+
+        <!-- INSTAGRAM -->
+
+        <a href="#"
+        class="block py-4 border-b border-neutral-800 hover:text-pink-400">
+
+            <span class="mr-3 text-lg">📸</span>
+            Instagram
+        </a>
+
+        <!-- ABOUT -->
+
+        <a href="#"
+        class="block py-4 border-b border-neutral-800 hover:text-orange-400">
+
+            <span class="mr-3">ⓘ</span>
+            About
+
+        </a>
+
+        <!-- CONTACT -->
+
+        <a href="#"
+        class="block py-4 border-b border-neutral-800 hover:text-orange-400">
+
+            <span class="mr-3">☎</span>
+            Contact
+
+        </a>       
+
+        <!-- LOGOUT -->
+
+        <a href="{% url 'logout' %}"
+        class="block py-4 text-red-400">
+
+            🚪 Logout
+
+        </a>
+
+
+    </div>
+
+</div>
+
+<script>
+
+const menuButton = document.getElementById("menuButton");
+const mobileMenu = document.getElementById("mobileMenu");
+const menuOverlay = document.getElementById("menuOverlay");
+const closeMenu = document.getElementById("closeMenu");
+
+
+// OPEN MENU
+
+if (menuButton) {
+
+    menuButton.addEventListener("click", function () {
+
+        mobileMenu.classList.remove("-translate-x-full");
+
+        menuOverlay.classList.remove("hidden");
+
+    });
+
+}
+
+
+// CLOSE MENU BUTTON
+
+if (closeMenu) {
+
+    closeMenu.addEventListener("click", function () {
+
+        mobileMenu.classList.add("-translate-x-full");
+
+        menuOverlay.classList.add("hidden");
+
+    });
+
+}
+
+
+// CLOSE WHEN TAPPING OUTSIDE
+
+if (menuOverlay) {
+
+    menuOverlay.addEventListener("click", function () {
+
+        mobileMenu.classList.add("-translate-x-full");
+
+        menuOverlay.classList.add("hidden");
+
+    });
+
+}
+
+
+// CATEGORY DROPDOWN
+
+const categoryToggle = document.getElementById("categoryToggle");
+const categoryList = document.getElementById("categoryList");
+
+if (categoryToggle) {
+
+    categoryToggle.addEventListener("click", function () {
+
+        categoryList.classList.toggle("hidden");
+
+    });
+
+}
+
+</script>
+
+<script>
+
+const header = document.getElementById("siteHeader");
+
+window.addEventListener("scroll", function(){
+
+    if(window.scrollY > 80){
+
+        header.classList.remove("bg-transparent");
+
+        header.classList.add(
+            "bg-black/70",
+            "backdrop-blur-xl",
+            "border-white/10"
+        );
+
+    }else{
+
+        header.classList.remove(
+            "bg-black/70",
+            "backdrop-blur-xl",
+            "border-white/10"
+        );
+
+        header.classList.add("bg-transparent");
+
+    }
+
+});
+
+</script>
+</body>
+</html>

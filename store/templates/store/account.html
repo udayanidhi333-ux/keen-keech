@@ -1,0 +1,290 @@
+{% extends "store/base.html" %}
+
+{% block content %}
+
+<section class="min-h-screen bg-[#0b0c10] px-5 pt-24 pb-20">
+
+
+<div class="max-w-2xl mx-auto">
+
+    {% if user.is_authenticated %}
+
+    <!-- PROFILE HEADER -->
+
+    <div class="text-center mb-10">
+
+        <div class="w-20 h-20 mx-auto rounded-full
+                    bg-[#181818]
+                    border border-orange-500/40
+                    flex items-center justify-center
+                    text-3xl font-semibold
+                    text-orange-400">
+
+            {{ customer.name|first|upper }}
+
+        </div>
+
+        <h1 class="mt-5 text-2xl font-semibold tracking-wide text-white">
+
+            {{ customer.name }}
+
+        </h1>
+
+        <p class="mt-2 text-xs uppercase tracking-[3px] text-neutral-500">
+
+            Customer ID · {{ customer.customer_id }}
+
+        </p>
+
+        <p class="mt-2 text-sm text-neutral-400">
+
+            {{ customer.whatsapp_number }}
+
+        </p>
+
+    </div>
+
+
+    <!-- ACCOUNT OPTIONS -->
+
+    <div class="border-t border-neutral-800">
+
+
+        <!-- MY ORDERS -->
+
+        <a href="{% url 'customer_orders' %}"
+           class="group flex items-center justify-between
+                  py-6
+                  border-b border-neutral-800
+                  transition">
+
+            <div>
+
+                <h3 class="text-base text-neutral-100
+                           group-hover:text-orange-400
+                           transition">
+
+                    My Orders
+
+                </h3>
+
+                <p class="mt-1 text-xs text-neutral-500">
+
+                    View and track your purchases
+
+                </p>
+
+            </div>
+
+            <span class="text-xl text-neutral-600
+                         group-hover:text-orange-400
+                         transition">
+
+                →
+
+            </span>
+
+        </a>
+
+
+        <!-- WISHLIST -->
+
+        <a href="{% url 'wishlist' %}"
+           class="group flex items-center justify-between
+                  py-6
+                  border-b border-neutral-800
+                  transition">
+
+            <div>
+
+                <h3 class="text-base text-neutral-100
+                           group-hover:text-orange-400
+                           transition">
+
+                    Wishlist
+
+                </h3>
+
+                <p class="mt-1 text-xs text-neutral-500">
+
+                    Your saved pieces
+
+                </p>
+
+            </div>
+
+            <span class="text-xl text-neutral-600
+                         group-hover:text-orange-400
+                         transition">
+
+                →
+
+            </span>
+
+        </a>
+
+
+        <!-- EDIT PROFILE -->
+
+        <a href="#"
+           class="group flex items-center justify-between
+                  py-6
+                  border-b border-neutral-800
+                  transition">
+
+            <div>
+
+                <h3 class="text-base text-neutral-100
+                           group-hover:text-orange-400
+                           transition">
+
+                    Edit Profile
+
+                </h3>
+
+                <p class="mt-1 text-xs text-neutral-500">
+
+                    Update your personal details
+
+                </p>
+
+            </div>
+
+            <span class="text-xs uppercase tracking-widest text-neutral-600">
+
+                Soon
+
+            </span>
+
+        </a>
+
+
+        <!-- CHANGE PASSWORD -->
+
+        <a href="#"
+           class="group flex items-center justify-between
+                  py-6
+                  border-b border-neutral-800
+                  transition">
+
+            <div>
+
+                <h3 class="text-base text-neutral-100
+                           group-hover:text-orange-400
+                           transition">
+
+                    Change Password
+
+                </h3>
+
+                <p class="mt-1 text-xs text-neutral-500">
+
+                    Keep your account secure
+
+                </p>
+
+            </div>
+
+            <span class="text-xs uppercase tracking-widest text-neutral-600">
+
+                Soon
+
+            </span>
+
+        </a>
+
+    </div>
+
+
+    <!-- LOGOUT -->
+
+    <div class="mt-10 text-center">
+
+        <a href="{% url 'logout' %}"
+           class="inline-block
+                  text-xs
+                  uppercase
+                  tracking-[3px]
+                  text-red-400
+                  hover:text-red-300
+                  transition">
+
+            Logout
+
+        </a>
+
+    </div>
+
+
+    {% else %}
+
+    <!-- GUEST ACCOUNT -->
+
+    <div class="text-center py-20">
+
+        <p class="text-xs uppercase tracking-[5px] text-orange-400">
+
+            KEEN | KEECH
+
+        </p>
+
+        <h1 class="mt-5 text-3xl font-semibold text-white">
+
+            Your Account
+
+        </h1>
+
+        <p class="mt-4 text-sm text-neutral-500">
+
+            Sign in to view your orders, wishlist and account details.
+
+        </p>
+
+        <div class="mt-10 flex flex-col gap-4 max-w-xs mx-auto">
+
+            <a href="{% url 'login' %}"
+               class="py-3.5
+                      bg-orange-500
+                      hover:bg-orange-400
+                      text-black
+                      text-xs
+                      font-bold
+                      uppercase
+                      tracking-[3px]
+                      rounded-lg
+                      transition">
+
+                Login
+
+            </a>
+
+            <a href="{% url 'register' %}"
+               class="py-3.5
+                      border
+                      border-neutral-700
+                      hover:border-orange-500
+                      text-neutral-300
+                      hover:text-orange-400
+                      text-xs
+                      font-bold
+                      uppercase
+                      tracking-[3px]
+                      rounded-lg
+                      transition">
+
+                Create Account
+
+            </a>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+
+</section>
+
+{% endblock %}

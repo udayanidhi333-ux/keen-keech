@@ -1,0 +1,194 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+
+<section class="max-w-5xl mx-auto px-5 sm:px-8 pt-28 pb-20">
+
+<!-- PAGE HEADER -->
+
+<div class="mb-10">
+
+    <p class="text-[10px] uppercase tracking-[0.35em] text-orange-400 mb-3">
+        Saved Pieces
+    </p>
+
+    <div class="flex items-center justify-between border-b border-neutral-800 pb-5">
+
+        <h1 class="text-2xl md:text-3xl font-medium tracking-wide text-white">
+            Wishlist
+        </h1>
+
+        {% if wishlist_items %}
+
+        <span class="text-xs text-neutral-500">
+            {{ wishlist_items|length }} saved
+        </span>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+{% if wishlist_items %}
+
+<!-- WISHLIST ITEMS -->
+
+<div class="divide-y divide-neutral-800">
+
+    {% for item in wishlist_items %}
+
+    <div class="group flex items-center gap-4 sm:gap-6 py-5">
+
+        <!-- PRODUCT IMAGE -->
+
+        <a
+            href="{% url 'product_detail' item.product.id %}"
+            class="flex-shrink-0">
+
+            {% if item.product.image %}
+
+            <img
+                src="{{ item.product.image.url }}"
+                alt="{{ item.product.name }}"
+                class="w-24 h-28 sm:w-32 sm:h-40 object-cover rounded-sm">
+
+            {% endif %}
+
+        </a>
+
+
+        <!-- PRODUCT INFORMATION -->
+
+        <div class="flex-1 min-w-0">
+
+            <a
+                href="{% url 'product_detail' item.product.id %}"
+                class="block">
+
+                <h2 class="text-sm sm:text-base font-medium text-neutral-100 truncate">
+
+                    {{ item.product.name }}
+
+                </h2>
+
+            </a>
+
+
+            {% if item.product.product_code %}
+
+            <p class="text-[10px] uppercase tracking-widest text-neutral-600 mt-2">
+
+                {{ item.product.product_code }}
+
+            </p>
+
+            {% endif %}
+
+
+            <p class="text-sm text-orange-400 mt-3">
+
+                ₹{{ item.product.price }}
+
+            </p>
+
+
+            <!-- VIEW DETAILS -->
+
+            <a
+                href="{% url 'product_detail' item.product.id %}"
+                class="inline-flex items-center gap-2 mt-4 text-[10px] uppercase tracking-widest text-neutral-400 hover:text-orange-400 transition">
+
+                View Details
+
+                <span class="text-sm">→</span>
+
+            </a>
+
+        </div>
+
+
+        <!-- REMOVE BUTTON -->
+
+        <a
+            href="{% url 'remove_from_wishlist' item.id %}"
+            class="flex-shrink-0 w-9 h-9 flex items-center justify-center text-neutral-600 hover:text-red-400 transition"
+            title="Remove from wishlist">
+
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-5 h-5">
+
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 18L18 6M6 6l12 12"/>
+
+            </svg>
+
+        </a>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+
+{% else %}
+
+<!-- EMPTY WISHLIST -->
+
+<div class="min-h-[45vh] flex flex-col items-center justify-center text-center">
+
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.2"
+        stroke="currentColor"
+        class="w-12 h-12 text-neutral-700 mb-5">
+
+        <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 6h15l-1.5 9h-12zM6 6L5 3H2M9 20a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"/>
+
+    </svg>
+
+
+    <h2 class="text-lg text-neutral-300 font-medium">
+
+        Your wishlist is empty
+
+    </h2>
+
+
+    <p class="text-sm text-neutral-600 mt-2">
+
+        Save your favourite pieces here.
+
+    </p>
+
+
+    <a
+        href="{% url 'home' %}#collection"
+        class="mt-7 px-6 py-3 border border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-black text-[10px] uppercase tracking-widest transition">
+
+        Explore Collection
+
+    </a>
+
+</div>
+
+{% endif %}
+
+
+</section>
+
+{% endblock %}

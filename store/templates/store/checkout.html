@@ -1,0 +1,656 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+
+<div class="max-w-7xl mx-auto px-5 pt-28 pb-24">
+
+    <!-- HEADER -->
+
+    <div class="mb-12">
+
+        <p class="text-[10px] uppercase tracking-[6px] text-orange-400 mb-3">
+            KEEN | KEECH
+        </p>
+
+        <h1 class="text-3xl md:text-4xl font-semibold tracking-[4px] uppercase text-white">
+            Secure Checkout
+        </h1>
+
+        <div class="w-16 h-[2px] bg-orange-500 mt-5"></div>
+
+    </div>
+
+
+    <div class="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-16">
+
+
+        <!-- ================================= -->
+        <!-- DELIVERY INFORMATION -->
+        <!-- ================================= -->
+
+        <div>
+
+            <div class="mb-8">
+
+                <p class="text-[10px] uppercase tracking-[4px] text-neutral-500 mb-3">
+                    Step 01
+                </p>
+
+                <h2 class="text-xl font-medium uppercase tracking-[3px] text-white">
+                    Delivery Information
+                </h2>
+
+            </div>
+
+
+            <form method="POST" class="space-y-5">
+
+                {% csrf_token %}
+
+
+                <!-- FULL NAME -->
+
+                <div>
+
+                    <label class="block mb-2 text-[10px] uppercase tracking-[2px] text-neutral-500">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="full_name"
+                        required
+                        class="w-full h-14
+                               bg-[#111216]
+                               border border-white/[0.08]
+                               rounded-xl
+                               px-4
+                               text-sm
+                               text-white
+                               placeholder-neutral-600
+                               outline-none
+                               focus:border-orange-500/70
+                               focus:ring-1
+                               focus:ring-orange-500/20
+                               transition"
+                    >
+
+                </div>
+
+
+                <!-- WHATSAPP -->
+
+                <div>
+
+                    <label class="block mb-2 text-[10px] uppercase tracking-[2px] text-neutral-500">
+                        WhatsApp Number
+                    </label>
+
+                    <input
+                        type="tel"
+                        name="phone_number"
+                        required
+                        class="w-full h-14
+                               bg-[#111216]
+                               border border-white/[0.08]
+                               rounded-xl
+                               px-4
+                               text-sm
+                               text-white
+                               outline-none
+                               focus:border-orange-500/70
+                               focus:ring-1
+                               focus:ring-orange-500/20
+                               transition"
+                    >
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div>
+
+                    <label class="block mb-2 text-[10px] uppercase tracking-[2px] text-neutral-500">
+                        Email
+                        <span class="text-neutral-700 normal-case tracking-normal">
+                            (Optional)
+                        </span>
+                    </label>
+
+                    <input
+                        type="email"
+                        name="email"
+                        class="w-full h-14
+                               bg-[#111216]
+                               border border-white/[0.08]
+                               rounded-xl
+                               px-4
+                               text-sm
+                               text-white
+                               outline-none
+                               focus:border-orange-500/70
+                               focus:ring-1
+                               focus:ring-orange-500/20
+                               transition"
+                    >
+
+                </div>
+
+
+                <!-- ADDRESS -->
+
+                <div class="pt-5">
+
+                    <p class="text-[10px] uppercase tracking-[3px] text-orange-400 mb-5">
+                        Delivery Address
+                    </p>
+
+
+                    <!-- HOUSE -->
+
+                    <div class="mb-5">
+
+                        <label class="block mb-2 text-[10px] uppercase tracking-[2px] text-neutral-500">
+                            House / Flat
+                        </label>
+
+                        <input
+                            type="text"
+                            name="house"
+                            required
+                            class="w-full h-14
+                                   bg-[#111216]
+                                   border border-white/[0.08]
+                                   rounded-xl
+                                   px-4
+                                   text-sm
+                                   text-white
+                                   outline-none
+                                   focus:border-orange-500/70
+                                   focus:ring-1
+                                   focus:ring-orange-500/20
+                                   transition"
+                        >
+
+                    </div>
+
+
+                    <!-- STREET -->
+
+                    <div class="mb-5">
+
+                        <label class="block mb-2 text-[10px] uppercase tracking-[2px] text-neutral-500">
+                            Street
+                        </label>
+
+                        <input
+                            type="text"
+                            name="street"
+                            required
+                            class="w-full h-14
+                                   bg-[#111216]
+                                   border border-white/[0.08]
+                                   rounded-xl
+                                   px-4
+                                   text-sm
+                                   text-white
+                                   outline-none
+                                   focus:border-orange-500/70
+                                   focus:ring-1
+                                   focus:ring-orange-500/20
+                                   transition"
+                        >
+
+                    </div>
+
+
+                    <!-- AREA -->
+
+                    <div class="mb-5">
+
+                        <label class="block mb-2 text-[10px] uppercase tracking-[2px] text-neutral-500">
+                            Area
+                        </label>
+
+                        <input
+                            type="text"
+                            name="area"
+                            required
+                            class="w-full h-14
+                                   bg-[#111216]
+                                   border border-white/[0.08]
+                                   rounded-xl
+                                   px-4
+                                   text-sm
+                                   text-white
+                                   outline-none
+                                   focus:border-orange-500/70
+                                   focus:ring-1
+                                   focus:ring-orange-500/20
+                                   transition"
+                        >
+
+                    </div>
+
+
+                    <!-- CITY / STATE -->
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+
+
+                        <div>
+
+                            <label class="block mb-2 text-[10px] uppercase tracking-[2px] text-neutral-500">
+                                City
+                            </label>
+
+                            <input
+                                type="text"
+                                name="city"
+                                required
+                                class="w-full h-14
+                                       bg-[#111216]
+                                       border border-white/[0.08]
+                                       rounded-xl
+                                       px-4
+                                       text-sm
+                                       text-white
+                                       outline-none
+                                       focus:border-orange-500/70
+                                       focus:ring-1
+                                       focus:ring-orange-500/20
+                                       transition"
+                            >
+
+                        </div>
+
+
+                        <div>
+
+                            <label class="block mb-2 text-[10px] uppercase tracking-[2px] text-neutral-500">
+                                State
+                            </label>
+
+                            <input
+                                type="text"
+                                name="state"
+                                required
+                                class="w-full h-14
+                                       bg-[#111216]
+                                       border border-white/[0.08]
+                                       rounded-xl
+                                       px-4
+                                       text-sm
+                                       text-white
+                                       outline-none
+                                       focus:border-orange-500/70
+                                       focus:ring-1
+                                       focus:ring-orange-500/20
+                                       transition"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PINCODE -->
+
+                    <div>
+
+                        <label class="block mb-2 text-[10px] uppercase tracking-[2px] text-neutral-500">
+                            Pincode
+                        </label>
+
+                        <input
+                            type="text"
+                            name="pincode"
+                            required
+                            class="w-full h-14
+                                   bg-[#111216]
+                                   border border-white/[0.08]
+                                   rounded-xl
+                                   px-4
+                                   text-sm
+                                   text-white
+                                   outline-none
+                                   focus:border-orange-500/70
+                                   focus:ring-1
+                                   focus:ring-orange-500/20
+                                   transition"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================= -->
+                <!-- PAYMENT METHOD -->
+                <!-- ================================= -->
+
+                <div class="pt-7">
+
+                    <p class="text-[10px] uppercase tracking-[3px] text-orange-400 mb-5">
+                        Payment Method
+                    </p>
+
+
+                    <div class="space-y-3">
+
+
+                        <!-- WHATSAPP PAYMENT -->
+
+                        <label
+                            class="group flex items-center justify-between
+                                   gap-5
+                                   p-5
+                                   rounded-2xl
+                                   bg-[#111216]
+                                   border border-orange-500/40
+                                   hover:border-orange-500
+                                   transition
+                                   cursor-pointer">
+
+                            <div>
+
+                                <p class="text-sm font-medium text-white">
+                                    Online Payment
+                                </p>
+
+                                <p class="text-xs leading-5 text-neutral-500 mt-1">
+                                    Pay using QR code / UPI through WhatsApp.
+                                </p>
+
+                            </div>
+
+
+                            <input
+                                type="radio"
+                                name="payment_method"
+                                value="cod"
+                                checked
+                                class="accent-orange-500 w-4 h-4"
+                            >
+
+                        </label>
+
+
+                        <!-- RAZORPAY -->
+
+                        <label
+                            class="flex items-center justify-between
+                                   gap-5
+                                   p-5
+                                   rounded-2xl
+                                   bg-[#0d0e11]
+                                   border border-white/[0.06]
+                                   opacity-60
+                                   cursor-not-allowed">
+
+                            <div>
+
+                                <p class="text-sm font-medium text-neutral-300">
+                                    Razorpay
+                                </p>
+
+                                <p class="text-xs leading-5 text-neutral-600 mt-1">
+                                    UPI · Cards · Net Banking
+                                    <span class="text-orange-400">
+                                        (Coming Soon)
+                                    </span>
+                                </p>
+
+                            </div>
+
+
+                            <input
+                                type="radio"
+                                disabled
+                                class="w-4 h-4"
+                            >
+
+                        </label>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- PLACE ORDER -->
+
+                <button
+                    type="submit"
+                    class="group relative
+                           w-full
+                           h-14
+                           mt-8
+                           overflow-hidden
+                           rounded-xl
+                           bg-orange-500
+                           text-black
+                           font-semibold
+                           text-xs
+                           uppercase
+                           tracking-[3px]
+                           shadow-[0_0_25px_rgba(249,115,22,0.12)]
+                           hover:bg-orange-400
+                           hover:shadow-[0_0_35px_rgba(249,115,22,0.35)]
+                           transition-all
+                           duration-500">
+
+                    <span>
+                        Place Order
+                    </span>
+
+                    <span class="ml-3
+                                 text-lg
+                                 inline-block
+                                 transition-transform
+                                 duration-300
+                                 group-hover:translate-x-1">
+
+                        →
+
+                    </span>
+
+                </button>
+
+
+            </form>
+
+        </div>
+
+
+        <!-- ================================= -->
+        <!-- ORDER SUMMARY -->
+        <!-- ================================= -->
+
+        <div>
+
+            <div class="lg:sticky lg:top-28">
+
+                <div class="mb-8">
+
+                    <p class="text-[10px] uppercase tracking-[4px] text-neutral-500 mb-3">
+                        Step 02
+                    </p>
+
+                    <h2 class="text-xl font-medium uppercase tracking-[3px] text-white">
+                        Order Summary
+                    </h2>
+
+                </div>
+
+
+                <div class="rounded-2xl
+                            bg-[#111216]
+                            border border-white/[0.07]
+                            p-5 sm:p-7">
+
+
+                    <!-- ITEMS -->
+
+                    <div class="space-y-5">
+
+
+                        {% for item in cart_items %}
+
+                        <div class="flex gap-4 pb-5 border-b border-white/[0.06]">
+
+
+                            <!-- IMAGE -->
+
+                            <div class="w-20 h-24
+                                        flex-shrink-0
+                                        rounded-xl
+                                        overflow-hidden
+                                        bg-[#08090c]">
+
+                                {% if item.product.image %}
+
+                                <img
+                                    src="{{ item.product.image.url }}"
+                                    alt="{{ item.product.name }}"
+                                    class="w-full h-full object-cover"
+                                >
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- INFO -->
+
+                            <div class="flex-1 min-w-0">
+
+                                <p class="text-sm font-medium text-white leading-5">
+                                    {{ item.product.name }}
+                                </p>
+
+                                <p class="text-[10px] text-neutral-500 mt-2">
+                                    {{ item.product.product_code }}
+                                </p>
+
+                                {% if item.size %}
+
+                                <p class="text-xs text-neutral-500 mt-2">
+
+                                    Size:
+                                    <span class="text-orange-400">
+                                        {{ item.size }}
+                                    </span>
+
+                                </p>
+
+                                {% endif %}
+
+                                <p class="text-xs text-neutral-500 mt-1">
+
+                                    Quantity:
+                                    <span class="text-neutral-300">
+                                        {{ item.quantity }}
+                                    </span>
+
+                                </p>
+
+                            </div>
+
+
+                            <!-- PRICE -->
+
+                            <div class="text-sm
+                                        font-semibold
+                                        text-orange-400
+                                        whitespace-nowrap">
+
+                                ₹{{ item.product.price }}
+
+                            </div>
+
+                        </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- DELIVERY -->
+
+                    <div class="flex justify-between
+                                gap-5
+                                mt-7
+                                text-xs">
+
+                        <span class="text-neutral-500">
+                            Delivery Charges
+                        </span>
+
+                        <span class="text-green-400 text-right">
+                            To be calculated at payment
+                        </span>
+
+                    </div>
+
+
+                    <!-- TOTAL -->
+
+                    <div class="flex items-end
+                                justify-between
+                                gap-5
+                                mt-6
+                                pt-6
+                                border-t border-white/[0.08]">
+
+                        <span class="text-xs
+                                     uppercase
+                                     tracking-[2px]
+                                     text-neutral-400">
+
+                            Total
+
+                        </span>
+
+
+                        <span class="text-3xl
+                                     font-semibold
+                                     text-orange-400">
+
+                            ₹{{ total_price }}
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- SECURITY -->
+
+                    <div class="mt-7
+                                pt-5
+                                border-t border-white/[0.06]
+                                text-center">
+
+                        <p class="text-[10px]
+                                  uppercase
+                                  tracking-[2px]
+                                  text-neutral-600">
+
+                            Secure order processing
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,565 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="max-w-7xl mx-auto px-5 pt-24 pb-20">
+
+    <!-- BACK BUTTON -->
+    <a href="{% url 'home' %}#collection"
+       class="inline-flex items-center gap-2
+              text-sm text-neutral-400
+              hover:text-orange-400
+              transition">
+
+        ← Back to Collection
+
+    </a>
+
+
+    <!-- PRODUCT SECTION -->
+
+    <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 mt-8">
+
+
+        <!-- ========================= -->
+        <!-- LEFT : IMAGE GALLERY -->
+        <!-- ========================= -->
+
+        <div>
+
+            <!-- MAIN IMAGE -->
+
+            <div class="rounded-2xl overflow-hidden
+                        border border-neutral-800
+                        bg-neutral-900">
+
+                {% if product.image %}
+
+                <img
+                id="mainImage"
+                src="{{ product.image.url }}"
+                class="w-full
+                       h-[500px]
+                       sm:h-[600px]
+                       lg:h-[650px]
+                       object-cover
+                       transition duration-700">
+
+                {% else %}
+
+                <div class="h-[500px]
+                            lg:h-[650px]
+                            flex items-center
+                            justify-center
+                            text-neutral-600">
+
+                    No Image
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- THUMBNAILS -->
+
+            <div class="flex gap-3 mt-4 overflow-x-auto pb-2">
+
+                {% if product.image %}
+
+                <img
+                onclick="changeImage(this.src)"
+                src="{{ product.image.url }}"
+                class="thumbnail
+                       w-20 h-20
+                       object-cover
+                       rounded-lg
+                       border border-orange-500
+                       cursor-pointer
+                       hover:border-orange-400
+                       transition">
+
+                {% endif %}
+
+
+                {% for img in product.images.all %}
+
+                <img
+                onclick="changeImage(this.src)"
+                src="{{ img.image.url }}"
+                class="thumbnail
+                       w-20 h-20
+                       object-cover
+                       rounded-lg
+                       border border-neutral-700
+                       cursor-pointer
+                       hover:border-orange-400
+                       transition">
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- RIGHT PRODUCT INFO -->
+        <!-- ========================= -->
+
+        <div class="lg:sticky lg:top-28 h-fit">
+
+            <!-- BRAND -->
+
+            <p class="text-[10px]
+                      tracking-[6px]
+                      text-orange-400
+                      uppercase">
+
+                KEEN | KEECH
+
+            </p>
+
+
+            <!-- PRODUCT NAME -->
+
+            <h1 class="text-2xl
+                       sm:text-3xl
+                       lg:text-4xl
+                       font-semibold
+                       tracking-wide
+                       text-white
+                       mt-3
+                       leading-tight">
+
+                {{ product.name }}
+
+            </h1>
+
+
+            <!-- PRODUCT CODE -->
+
+            <p class="text-xs
+                      text-neutral-500
+                      mt-3">
+
+                Product Code :
+
+                <span class="text-neutral-300">
+
+                    {{ product.product_code }}
+
+                </span>
+
+            </p>
+
+
+            <!-- PRICE -->
+
+            <div class="mt-6">
+
+                <span class="text-3xl
+                             sm:text-4xl
+                             font-semibold
+                             text-orange-400">
+
+                    ₹{{ product.price }}
+
+                </span>
+
+            </div>
+
+
+            <div class="border-b
+                        border-neutral-800
+                        my-6">
+            </div>
+
+
+            <!-- DESCRIPTION -->
+
+            <h3 class="text-[10px]
+                       uppercase
+                       tracking-[4px]
+                       text-neutral-500
+                       mb-3">
+
+                Description
+
+            </h3>
+
+
+            <p class="text-sm
+                      text-neutral-300
+                      leading-7
+                      max-w-xl">
+
+                {{ product.description }}
+
+            </p>
+
+
+            <!-- SIZE SELECTION -->
+
+            {% if sizes %}
+
+            <div class="mt-8">
+
+                <div class="flex
+                            justify-between
+                            items-center">
+
+                    <h3 class="text-[10px]
+                               uppercase
+                               tracking-[4px]
+                               text-neutral-500">
+
+                        Select Size
+
+                    </h3>
+
+
+                    <button
+                    type="button"
+                    id="sizeGuideBtn"
+                    class="text-xs
+                           text-orange-400
+                           hover:text-orange-300
+                           transition">
+
+                        Size Guide
+
+                    </button>
+
+                </div>
+
+
+                <div class="flex
+                            gap-2
+                            flex-wrap
+                            mt-4">
+
+                    {% for size in sizes %}
+
+                    <button
+                    type="button"
+                    data-size="{{ size }}"
+                    class="size-btn
+                           w-12
+                           h-12
+                           rounded-lg
+                           border
+                           border-neutral-700
+                           text-sm
+                           text-white
+                           hover:border-orange-500
+                           transition">
+
+                        {{ size }}
+
+                    </button>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+
+            <!-- SIZE CHART -->
+
+            <div class="mt-6">
+
+                <div
+                id="sizeChart"
+                class="hidden
+                       border
+                       border-neutral-800
+                       rounded-xl
+                       p-4
+                       bg-neutral-900/50">
+
+                    <h3 class="text-sm
+                               text-white
+                               font-semibold
+                               mb-3">
+
+                        Size Guide
+
+                    </h3>
+
+                    <p class="text-xs
+                              text-neutral-400
+                              leading-6">
+
+                        S - Small Fit
+                        <br>
+                        M - Medium Fit
+                        <br>
+                        L - Large Fit
+                        <br>
+                        XL - Extra Large Fit
+                        <br>
+                        XXL - Double Extra Large
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ADD TO CART -->
+
+            <form
+            action="{% url 'add_to_cart' product.id %}"
+            method="POST"
+            class="mt-8">
+
+                {% csrf_token %}
+
+                <input
+                type="hidden"
+                name="size"
+                id="selected-size"
+                value="">
+
+
+                <button
+                type="submit"
+                class="w-full
+                       py-3.5
+                       rounded-xl
+                       bg-orange-500
+                       hover:bg-orange-400
+                       text-black
+                       text-sm
+                       font-semibold
+                       tracking-[3px]
+                       transition
+                       shadow-lg
+                       shadow-orange-500/10">
+
+                    ADD TO CART
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ========================= -->
+<!-- RELATED PRODUCTS -->
+<!-- ========================= -->
+
+<div class="max-w-7xl mx-auto px-5 pb-20">
+
+    <div class="border-t border-neutral-800 pt-12">
+
+        <h2 class="text-xl
+                   sm:text-2xl
+                   font-semibold
+                   text-white
+                   tracking-[3px]
+                   uppercase
+                   mb-8">
+
+            Similar Products
+
+        </h2>
+
+
+        <div class="grid
+                    grid-cols-2
+                    md:grid-cols-4
+                    gap-5
+                    md:gap-6">
+
+
+            {% for item in related_products %}
+
+            <a href="{% url 'product_detail' item.id %}"
+               class="group">
+
+
+                <div class="rounded-xl
+                            overflow-hidden
+                            border border-neutral-800
+                            bg-neutral-900">
+
+                    {% if item.image %}
+
+                    <img
+                    src="{{ item.image.url }}"
+                    class="w-full
+                           h-56
+                           sm:h-64
+                           object-cover
+                           group-hover:scale-105
+                           transition
+                           duration-700">
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="mt-3">
+
+                    <h3 class="text-sm
+                               text-white
+                               font-medium
+                               leading-5">
+
+                        {{ item.name }}
+
+                    </h3>
+
+
+                    <p class="text-sm
+                              text-orange-400
+                              mt-1
+                              font-semibold">
+
+                        ₹{{ item.price }}
+
+                    </p>
+
+                </div>
+
+            </a>
+
+            {% empty %}
+
+            <p class="text-sm text-neutral-500">
+
+                No related products available.
+
+            </p>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ========================= -->
+<!-- JAVASCRIPT -->
+<!-- ========================= -->
+
+<script>
+
+function changeImage(src) {
+
+    document.getElementById("mainImage").src = src;
+
+}
+
+
+const sizeButtons =
+document.querySelectorAll(".size-btn");
+
+const selectedSize =
+document.getElementById("selected-size");
+
+
+sizeButtons.forEach(button => {
+
+    button.addEventListener("click", function() {
+
+        sizeButtons.forEach(btn => {
+
+            btn.classList.remove(
+                "bg-orange-500",
+                "text-black",
+                "border-orange-500"
+            );
+
+            btn.classList.add(
+                "text-white"
+            );
+
+        });
+
+
+        this.classList.remove("text-white");
+
+        this.classList.add(
+            "bg-orange-500",
+            "text-black",
+            "border-orange-500"
+        );
+
+
+        selectedSize.value =
+        this.dataset.size;
+
+    });
+
+});
+
+
+const sizeGuideBtn =
+document.getElementById("sizeGuideBtn");
+
+const sizeChart =
+document.getElementById("sizeChart");
+
+
+if (sizeGuideBtn) {
+
+    sizeGuideBtn.addEventListener(
+        "click",
+        function() {
+
+            sizeChart.classList.toggle("hidden");
+
+        }
+    );
+
+}
+
+
+const cartForm =
+document.querySelector(
+    'form[action*="add-to-cart"]'
+);
+
+
+if (cartForm) {
+
+    cartForm.addEventListener(
+        "submit",
+        function(e) {
+
+            if (
+                sizeButtons.length > 0 &&
+                selectedSize.value === ""
+            ) {
+
+                alert("Please select your size");
+
+                e.preventDefault();
+
+            }
+
+        }
+    );
+
+}
+
+</script>
+
+{% endblock %}

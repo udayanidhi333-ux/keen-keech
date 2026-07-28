@@ -1,0 +1,417 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="min-h-[80vh] flex items-center justify-center px-5 py-24">
+
+    <div class="w-full max-w-2xl">
+
+        <!-- SUCCESS CARD -->
+
+        <div class="relative overflow-hidden
+                    rounded-3xl
+                    bg-[#111216]
+                    border border-white/[0.08]
+                    shadow-[0_25px_80px_rgba(0,0,0,0.45)]">
+
+
+            <!-- TOP GLOW -->
+
+            <div class="absolute top-0 left-1/2 -translate-x-1/2
+                        w-72 h-32
+                        bg-green-500/10
+                        blur-3xl
+                        pointer-events-none">
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- SUCCESS HEADER -->
+            <!-- ========================= -->
+
+            <div class="relative px-6 sm:px-10 py-12 text-center
+                        border-b border-white/[0.07]">
+
+
+                <!-- CHECK ICON -->
+
+                <div class="relative w-20 h-20 mx-auto
+                            rounded-full
+                            border border-green-500/30
+                            bg-green-500/10
+                            flex items-center justify-center
+                            shadow-[0_0_35px_rgba(34,197,94,0.12)]">
+
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         fill="none"
+                         viewBox="0 0 24 24"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         class="w-9 h-9 text-green-400">
+
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M5 13l4 4L19 7"/>
+
+                    </svg>
+
+                </div>
+
+
+                <p class="mt-8 text-[10px]
+                          uppercase
+                          tracking-[5px]
+                          text-green-400">
+
+                    Thank You
+
+                </p>
+
+
+                <h1 class="mt-4
+                           text-2xl sm:text-3xl
+                           font-semibold
+                           tracking-[4px]
+                           text-white">
+
+                    ORDER CONFIRMED
+
+                </h1>
+
+
+                <p class="mt-5 text-sm
+                          leading-7
+                          text-neutral-500">
+
+                    Your order has been successfully placed.
+
+                </p>
+
+
+                <div class="mt-7">
+
+                    <h2 class="text-xl sm:text-2xl
+                               font-semibold
+                               tracking-[5px]
+                               text-[#ffad66]">
+
+                        KEEN | KEECH
+
+                    </h2>
+
+                    <p class="mt-2
+                              text-[9px]
+                              uppercase
+                              tracking-[6px]
+                              text-neutral-600">
+
+                        Waist & Collar
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- ORDER DETAILS -->
+            <!-- ========================= -->
+
+            <div class="px-6 sm:px-10 py-8">
+
+
+                <div class="space-y-5">
+
+
+                    <!-- ORDER NUMBER -->
+
+                    <div class="flex items-center
+                                justify-between
+                                gap-5">
+
+                        <span class="text-xs
+                                     uppercase
+                                     tracking-[2px]
+                                     text-neutral-500">
+
+                            Order Number
+
+                        </span>
+
+                        <span class="text-sm
+                                     font-semibold
+                                     text-orange-400
+                                     text-right">
+
+                            {{ order.order_number }}
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- PAYMENT -->
+
+                    <div class="flex items-center
+                                justify-between
+                                gap-5">
+
+                        <span class="text-xs
+                                     uppercase
+                                     tracking-[2px]
+                                     text-neutral-500">
+
+                            Payment
+
+                        </span>
+
+                        <span class="text-sm
+                                     text-green-400
+                                     text-right">
+
+                            {{ order.payment_status }}
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- STATUS -->
+
+                    <div class="flex items-center
+                                justify-between
+                                gap-5">
+
+                        <span class="text-xs
+                                     uppercase
+                                     tracking-[2px]
+                                     text-neutral-500">
+
+                            Order Status
+
+                        </span>
+
+                        <span class="text-sm
+                                     text-orange-400
+                                     text-right">
+
+                            {{ order.status }}
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- TOTAL -->
+
+                    <div class="flex items-end
+                                justify-between
+                                gap-5
+                                pt-6
+                                mt-6
+                                border-t border-white/[0.07]">
+
+                        <span class="text-xs
+                                     uppercase
+                                     tracking-[2px]
+                                     text-neutral-500">
+
+                            Total
+
+                        </span>
+
+                        <span class="text-2xl
+                                     font-semibold
+                                     text-white">
+
+                            ₹{{ order.total_amount }}
+
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- DELIVERY ADDRESS -->
+            <!-- ========================= -->
+
+            <div class="px-6 sm:px-10 py-8
+                        border-t border-white/[0.07]">
+
+
+                <p class="text-[10px]
+                          uppercase
+                          tracking-[3px]
+                          text-orange-400
+                          mb-5">
+
+                    Delivery Address
+
+                </p>
+
+
+                <div class="rounded-2xl
+                            bg-[#0b0c10]
+                            border border-white/[0.06]
+                            p-5">
+
+                    <p class="text-sm
+                              leading-7
+                              text-neutral-300">
+
+                        {{ order.shipping_address }}
+
+                    </p>
+
+
+                    <div class="mt-5
+                                pt-4
+                                border-t border-white/[0.06]">
+
+                        <p class="text-xs
+                                  text-neutral-500">
+
+                            WhatsApp
+
+                        </p>
+
+                        <p class="mt-1
+                                  text-sm
+                                  text-[#ffad66]">
+
+                            {{ order.phone_number }}
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- MESSAGE -->
+            <!-- ========================= -->
+
+            <div class="px-6 sm:px-10 py-7
+                        border-t border-white/[0.07]
+                        text-center">
+
+                <p class="text-sm
+                          leading-7
+                          text-neutral-500">
+
+                    We'll notify you on WhatsApp whenever your order status changes.
+
+                </p>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- ACTIONS -->
+            <!-- ========================= -->
+
+            <div class="px-6 sm:px-10 pb-8">
+
+
+                <!-- WHATSAPP -->
+
+                <a href="{{ shop_whatsapp_url }}"
+                   class="group flex items-center
+                          justify-center
+                          gap-3
+                          w-full
+                          h-14
+                          rounded-xl
+                          bg-green-600
+                          text-white
+                          text-xs
+                          uppercase
+                          tracking-[2px]
+                          font-semibold
+                          hover:bg-green-500
+                          hover:shadow-[0_0_30px_rgba(34,197,94,0.22)]
+                          transition-all
+                          duration-500">
+
+                    <svg viewBox="0 0 24 24"
+                         width="20"
+                         height="20"
+                         fill="currentColor">
+
+                        <path d="M12.004 0C5.378 0 0 5.378 0 12.004c0 2.117.554 4.106 1.61 5.85L.057 24l6.305-1.654a11.947 11.947 0 005.642 1.42c6.626 0 12.004-5.379 12.004-12.005C24.008 5.378 18.63 0 12.004 0zm6.59 14.8c-.29-.145-1.71-.845-1.975-.941-.266-.096-.46-.145-.652.145-.192.291-.744.941-.912 1.133-.168.193-.336.217-.626.072-.29-.145-1.226-.452-2.335-1.442-.863-.77-1.445-1.721-1.614-2.012-.168-.291-.018-.448.127-.592.13-.13.29-.337.435-.507.145-.17.193-.29.29-.483.097-.193.048-.361-.024-.507-.072-.145-.652-1.573-.893-2.152-.234-.564-.473-.488-.652-.497-.169-.008-.361-.01-.554-.01-.193 0-.507.072-.772.361-.266.291-1.014.992-1.014 2.42 0 1.427 1.038 2.808 1.182 3.002.145.193 2.043 3.12 4.95 4.373.691.298 1.231.476 1.653.61.694.22 1.326.19 1.825.115.556-.083 1.71-.699 1.952-1.373.242-.675.242-1.253.17-1.373-.072-.12-.266-.192-.556-.337z"/>
+
+                    </svg>
+
+                    WhatsApp & Pay
+
+                    <span class="text-lg transition-transform duration-300 group-hover:translate-x-1">
+                        →
+                    </span>
+
+                </a>
+
+
+                <!-- SECONDARY BUTTONS -->
+
+                <div class="grid grid-cols-2 gap-3 mt-3">
+
+
+                    <a href="{% url 'customer_orders' %}"
+                       class="flex items-center
+                              justify-center
+                              h-14
+                              rounded-xl
+                              border border-white/[0.10]
+                              text-xs
+                              uppercase
+                              tracking-[1px]
+                              text-neutral-300
+                              hover:border-orange-500/60
+                              hover:text-orange-400
+                              transition">
+
+                        My Orders
+
+                    </a>
+
+
+                    <a href="{% url 'home' %}"
+                       class="flex items-center
+                              justify-center
+                              h-14
+                              rounded-xl
+                              bg-orange-500
+                              text-black
+                              text-xs
+                              uppercase
+                              tracking-[1px]
+                              font-semibold
+                              hover:bg-orange-400
+                              hover:shadow-[0_0_25px_rgba(249,115,22,0.25)]
+                              transition">
+
+                        Continue Shopping
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

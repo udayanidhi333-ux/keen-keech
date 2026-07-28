@@ -1,0 +1,67 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="min-h-screen bg-[#0a0604] text-neutral-100 pt-32 pb-16 px-4 md:px-12">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        
+        <div class="space-y-4 sticky top-32">
+            <div class="bg-neutral-900 rounded-[24px] overflow-hidden shadow-xl border border-neutral-800/60 relative aspect-[3/4]">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover">
+                {% else %}
+                    <div class="w-full h-full bg-neutral-850 flex items-center justify-center text-neutral-500">No Image Available</div>
+                {% endif %}
+                <span class="absolute top-4 left-4 bg-orange-600/90 text-white text-xs uppercase tracking-widest font-bold px-3 py-1.5 rounded-full">
+                    Luxury Fit
+                </span>
+            </div>
+        </div>
+
+        <div class="space-y-8 lg:pl-6">
+            <div class="space-y-2">
+                <span class="text-orange-500 font-bold uppercase tracking-[0.3em] text-xs">Bespoke Tailoring Portfolio</span>
+                <h1 class="font-serif text-4xl md:text-5xl font-bold tracking-tight text-white leading-tight">
+                    {{ product.name }}
+                </h1>
+                <p class="text-2xl text-neutral-300 font-medium pt-2">₹{{ product.price }}</p>
+            </div>
+
+            <hr class="border-neutral-800/80">
+
+            <div class="space-y-4">
+                <h3 class="font-serif text-lg font-medium text-neutral-200">The Design Narrative</h3>
+                <p class="text-neutral-400 text-sm md:text-base leading-relaxed tracking-wide">
+                    {{ product.description|default:"A masterfully structured creation from Keen Keech, designed for individuals who appreciate true class. Engineered with structural discipline to match your chosen configurations seamlessly." }}
+                </p>
+            </div>
+
+            <form action="{% url 'add_to_cart' product.id %}" method="POST" class="pt-4 space-y-6">
+                {% csrf_token %}
+                
+                <div class="space-y-3">
+                    <label class="block text-xs font-bold uppercase tracking-widest text-neutral-400">Select Variant Matrix</label>
+                    <div class="flex flex-wrap gap-3">
+                        <button type="button" class="border border-orange-600 bg-orange-600/10 text-orange-400 text-xs font-bold px-4 py-2.5 rounded-lg tracking-wider uppercase">
+                            Standard Premium Fit
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-white hover:bg-neutral-200 text-neutral-900 font-bold uppercase tracking-widest text-xs md:text-sm py-4 rounded-xl transition duration-300 shadow-lg flex items-center justify-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1,0-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                    </svg>
+                    Acquire & Add To Bag
+                </button>
+            </form>
+
+            <div class="pt-4 flex items-center gap-3 text-xs text-neutral-500 tracking-wider uppercase">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                Bespoke Atelier Studio Active Assurance
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

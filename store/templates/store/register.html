@@ -1,0 +1,257 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+
+<section class="min-h-screen bg-[#0b0c10] px-5 pt-24 pb-20">
+
+
+<div class="max-w-md mx-auto">
+
+    <!-- HEADER -->
+
+    <div class="text-center mb-10">
+
+        <p class="text-xs uppercase tracking-[5px] text-orange-400">
+
+            KEEN | KEECH
+
+        </p>
+
+        <h1 class="mt-5 text-3xl font-semibold tracking-wide text-white">
+
+            Create Account
+
+        </h1>
+
+        <p class="mt-3 text-sm text-neutral-500">
+
+            Join the KEEN | KEECH community.
+
+        </p>
+
+    </div>
+
+
+    <!-- REGISTRATION FORM -->
+
+    <form method="POST" class="space-y-6">
+
+        {% csrf_token %}
+
+
+        <!-- FULL NAME -->
+
+        <div>
+
+            <label class="block mb-2
+                          text-[10px]
+                          uppercase
+                          tracking-[3px]
+                          text-neutral-500">
+
+                Full Name
+
+            </label>
+
+            {{ form.name }}
+
+            {% if form.name.errors %}
+
+                <p class="mt-2 text-xs text-red-400">
+
+                    {{ form.name.errors|striptags }}
+
+                </p>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- WHATSAPP NUMBER -->
+
+        <div>
+
+            <label class="block mb-2
+                          text-[10px]
+                          uppercase
+                          tracking-[3px]
+                          text-neutral-500">
+
+                WhatsApp Number
+
+            </label>
+
+            {{ form.whatsapp_number }}
+
+            {% if form.whatsapp_number.errors %}
+
+                <p class="mt-2 text-xs text-red-400">
+
+                    {{ form.whatsapp_number.errors|striptags }}
+
+                </p>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- USERNAME -->
+
+        <div>
+
+            <label class="block mb-2
+                          text-[10px]
+                          uppercase
+                          tracking-[3px]
+                          text-neutral-500">
+
+                Username
+
+            </label>
+
+            {{ form.username }}
+
+            {% if form.username.errors %}
+
+                <p class="mt-2 text-xs text-red-400">
+
+                    {{ form.username.errors|striptags }}
+
+                </p>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- PASSWORD -->
+
+        <div>
+
+            <label class="block mb-2
+                          text-[10px]
+                          uppercase
+                          tracking-[3px]
+                          text-neutral-500">
+
+                Password
+
+            </label>
+
+            {{ form.password1 }}
+
+            {% if form.password1.errors %}
+
+                <p class="mt-2 text-xs text-red-400">
+
+                    {{ form.password1.errors|striptags }}
+
+                </p>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- CONFIRM PASSWORD -->
+
+        <div>
+
+            <label class="block mb-2
+                          text-[10px]
+                          uppercase
+                          tracking-[3px]
+                          text-neutral-500">
+
+                Confirm Password
+
+            </label>
+
+            {{ form.password2 }}
+
+            {% if form.password2.errors %}
+
+                <p class="mt-2 text-xs text-red-400">
+
+                    {{ form.password2.errors|striptags }}
+
+                </p>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- GENERAL FORM ERRORS -->
+
+        {% if form.non_field_errors %}
+
+            <div class="text-center">
+
+                <p class="text-xs text-red-400">
+
+                    {{ form.non_field_errors|striptags }}
+
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- SUBMIT BUTTON -->
+
+        <button type="submit"
+                class="w-full
+                       mt-4
+                       py-4
+                       bg-orange-500
+                       hover:bg-orange-400
+                       text-black
+                       font-bold
+                       text-xs
+                       uppercase
+                       tracking-[3px]
+                       rounded-lg
+                       transition">
+
+            Create Account
+
+        </button>
+
+    </form>
+
+
+    <!-- LOGIN LINK -->
+
+    <div class="mt-10 pt-8 border-t border-neutral-800 text-center">
+
+        <p class="text-sm text-neutral-500">
+
+            Already have an account?
+
+        </p>
+
+        <a href="{% url 'login' %}"
+           class="inline-block mt-3
+                  text-xs
+                  uppercase
+                  tracking-[3px]
+                  text-orange-400
+                  hover:text-orange-300
+                  transition">
+
+            Login →
+
+        </a>
+
+    </div>
+
+</div>
+
+
+</section>
+
+{% endblock %}
