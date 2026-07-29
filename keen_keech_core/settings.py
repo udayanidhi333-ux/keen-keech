@@ -88,10 +88,13 @@ WSGI_APPLICATION = 'keen_keech_core.wsgi.application'
 
 DATABASES = {
     "default": dj_database_url.config(
-        default=os.environ.get("DATABASE_URL")
+        default=os.environ.get(
+            "DATABASE_URL",
+            "mysql://root:keenkeechup56@127.0.0.1:3306/keen_keech_db"
+        ),
+        conn_max_age=600,
     )
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators

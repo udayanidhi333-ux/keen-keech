@@ -437,7 +437,7 @@ def checkout(request):
         """
 
         shop_whatsapp_url = (
-            "https://wa.me/919952135631?"
+            "https://wa.me/918122311196?"
             "text=" + urllib.parse.quote(whatsapp_message)
         )
 
@@ -774,3 +774,9 @@ def user_logout(request):
     logout(request)
     messages.success(request, "Logged out successfully.")
     return redirect("home")
+
+def about(request):
+    return render(request, "store/about.html")
+
+def contact(request):
+    return render(request, 'store/contact.html')
