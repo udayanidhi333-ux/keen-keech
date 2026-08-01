@@ -392,13 +392,17 @@ def checkout(request):
         ₹{order.total_amount}
         """
 
-        send_mail(
-            subject,
-            message,
-            settings.DEFAULT_FROM_EMAIL,
-            ["udayanidhi333@gmail.com"],
-            fail_silently=True,
-        )
+        try:
+            send_mail(
+                subject,
+                message,
+                settings.DEFAULT_FROM_EMAIL,
+                ["udayanidhi333@gmail.com"],
+                fail_silently=True,
+            )
+        except Exception as e:
+            print(f"Order confirmation email failed: {e}")
+            
         # IMPORTANT: clear correct cart
         cart.items.all().delete()
 
