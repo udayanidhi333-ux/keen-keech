@@ -397,7 +397,7 @@ def checkout(request):
             message,
             settings.DEFAULT_FROM_EMAIL,
             ["udayanidhi333@gmail.com"],
-            fail_silently=False,
+            fail_silently=True,
         )
         # IMPORTANT: clear correct cart
         cart.items.all().delete()
