@@ -162,7 +162,9 @@ overflow-hidden">
                     <div class="flex gap-3 overflow-x-auto no-scrollbar pb-2">
 
                         <button
-                            class="px-5 py-2 rounded-full bg-gradient-to-r from-orange-500 to-yellow-500 text-black text-xs uppercase tracking-[2px] font-semibold whitespace-nowrap">
+                            data-tag="all"
+                            data-category="{{ section.category.id }}"
+                            class="tag-filter px-5 py-2 rounded-full bg-gradient-to-r from-orange-500 to-yellow-500 text-black text-xs uppercase tracking-[2px] font-semibold whitespace-nowrap">
 
                             ALL
 
@@ -171,7 +173,9 @@ overflow-hidden">
                         {% for tag in section.tags %}
 
                         <button
-                            class="px-5 py-2 rounded-full border border-neutral-700 bg-[#171717] text-neutral-300 hover:text-orange-400 hover:border-orange-500 transition whitespace-nowrap">
+                            data-tag="{{ tag.id }}"
+                            data-category="{{ section.category.id }}"
+                            class="tag-filter px-5 py-2 rounded-full border border-neutral-700 bg-[#171717] text-neutral-300 hover:text-orange-400 hover:border-orange-500 transition whitespace-nowrap">
 
                             {{ tag.name }}
 
@@ -185,7 +189,9 @@ overflow-hidden">
 
                 {% endif %}
 
-                <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-10">
+                <div 
+                    id="product-grid-{{ section.category.id }}"
+                    class="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-10">
 
                     {% for product in section.products %}
 
@@ -473,4 +479,89 @@ searchInput.addEventListener("keyup", function () {
 });
 </script>
 </div>
+
+<script>
+
+document.querySelectorAll(".tag-filter").forEach(button => {
+
+    button.addEventListener("click", function(){
+
+        const tag = this.dataset.tag;
+        const category = this.dataset.category;
+
+
+        fetch(`/category-filter/?tag=${tag}&category=${category}`)
+
+        .then(response => response.json())
+
+        .then(data => {
+
+
+            const grid = document.getElementById(
+                `product-grid-${category}`
+            );
+
+
+            grid.innerHTML = "";
+
+
+            data.products.forEach(product => {
+
+
+                grid.innerHTML += `
+
+                <div class="group">
+
+                    <div class="relative overflow-hidden rounded-2xl bg-[#171717]">
+
+                        <a href="/product/${product.id}/">
+
+                            <img src="${product.image}"
+                                 alt="${product.name}"
+                                 class="w-full
+                                        h-[250px]
+                                        sm:h-[340px]
+                                        lg:h-[430px]
+                                        object-cover
+                                        transition-all duration-700
+                                        group-hover:scale-105">
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="pt-4">
+
+                        <h3 class="text-white
+                                   text-[12px]
+                                   sm:text-[14px]
+                                   font-medium
+                                   leading-5
+                                   tracking-wide">
+
+                            ${product.name}
+
+                        </h3>
+
+                    </div>
+
+                </div>
+
+                `;
+
+
+            });
+
+
+        });
+
+
+    });
+
+
+});
+
+
+</script>
 {% endblock %} 

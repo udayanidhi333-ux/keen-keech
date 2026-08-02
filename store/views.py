@@ -813,3 +813,33 @@ def about(request):
 
 def contact(request):
     return render(request, 'store/contact.html')
+
+
+def category_filter(request):
+
+    tag_id = request.GET.get("tag")
+    category_id = request.GET.get("category")
+
+    products = Product.objects.filter(
+        category_id=category_id
+    )
+
+    if tag_id and tag_id != "all":
+
+        products = products.filter(
+            tags__id=tag_id
+        )
+
+    product_data = []
+
+    for product in products[:8]:
+
+        product_data.append({
+            "id": product.id,
+            "name": product.name,
+            "image": product.image.url if product.image else "",
+        })
+
+    return JsonResponse({
+        "products": product_data
+    })
