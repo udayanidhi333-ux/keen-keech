@@ -6,7 +6,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.conf import settings
 from django.http import Http404
-from .models import Product, Cart, Wishlist, CartItem, CustomerProfile, Order, OrderItem ,Category
+from .models import Product, ProductTag, Cart, Wishlist, CartItem, CustomerProfile, Order, OrderItem ,Category
 from django.contrib.auth.models import User
 from django.views.decorators.http import require_POST 
 from django.contrib.auth import login, logout, authenticate
@@ -22,8 +22,12 @@ from django.db.models import Q
 def home(request):
 
     search = request.GET.get("q", "")
+    selected_tag = request.GET.get("tag")
 
     products = Product.objects.all()
+
+    if selected_tag:
+        products = products.filter(tags__slug=selected_tag)
 
     if search:
 
@@ -78,17 +82,19 @@ def home(request):
 
     for category in categories:
 
-        category_items = products.filter(
-            category=category
-        )[:8]
+        category_items = products.filter(category=category)
 
-        if category_items:
+        if category_items.exists():
+
+            category_tags = ProductTag.objects.filter(
+                products__category=category
+            ).distinct().order_by("name")
 
             category_sections.append({
                 "category": category,
-                "products": category_items,
+                "products": category_items[:8],
+                "tags": category_tags,
             })
-
 
     return render(
         request,
@@ -99,6 +105,7 @@ def home(request):
             "category_sections": category_sections,
             "cart_item_count": cart_item_count,
             "wishlist_products": wishlist_products,
+            "selected_tag": selected_tag,
         }
     )
 
