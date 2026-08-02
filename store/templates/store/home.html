@@ -176,11 +176,38 @@ overflow-hidden">
                                                     lg:h-[430px]
                                                     object-cover
                                                     transition-all duration-700
-                                                    group-hover:scale-105">
+                                                    group-hover:scale-105
+                                                    {% if product.stock <= 0 %}grayscale opacity-50{% endif %}">
 
                                     {% endif %}
 
                                 </a>
+
+                                {% if product.stock <= 0 %}
+
+                                <div class="absolute inset-0
+                                            flex items-center justify-center
+                                            bg-black/50
+                                            pointer-events-none">
+
+                                    <span class="px-4 py-1.5
+                                                 rounded-full
+                                                 border border-neutral-400
+                                                 bg-black/70
+                                                 text-white
+                                                 text-[10px]
+                                                 sm:text-xs
+                                                 uppercase
+                                                 tracking-[2px]
+                                                 font-semibold">
+
+                                        Out of Stock
+
+                                    </span>
+
+                                </div>
+
+                                {% endif %}
 
                             </div>
 
@@ -242,7 +269,17 @@ overflow-hidden">
                                 </div>
 
 
-                                <div class="mt-2">
+                                <div class="mt-2 flex items-center gap-2 flex-wrap">
+
+                                    {% if product.original_price and product.original_price > product.price %}
+
+                                    <p class="text-neutral-500 text-[12px] sm:text-sm line-through">
+
+                                        ₹{{ product.original_price }}
+
+                                    </p>
+
+                                    {% endif %}
 
                                     <p class="text-orange-400
                                             text-[15px]
@@ -252,6 +289,16 @@ overflow-hidden">
                                         ₹{{ product.price }}
 
                                     </p>
+
+                                    {% if product.original_price and product.original_price > product.price %}
+
+                                    <span class="text-green-400 text-[10px] sm:text-xs font-semibold">
+
+                                        {{ product.discount_percent }}% OFF
+
+                                    </span>
+
+                                    {% endif %}
 
                                 </div>
 
