@@ -1,0 +1,60 @@
+{% extends "store/base.html" %}
+
+{% block content %}
+
+<div class="max-w-7xl mx-auto px-4 py-20">
+
+    <h1 class="text-4xl text-white font-bold">
+        {{ category.name }}
+    </h1>
+
+
+    <div class="flex gap-3 mt-8 overflow-x-auto no-scrollbar">
+
+        <button class="px-5 py-2 rounded-full bg-gradient-to-r from-orange-500 to-yellow-500 text-black text-xs uppercase">
+            ALL
+        </button>
+
+
+        {% for tag in tags %}
+
+        <button class="px-5 py-2 rounded-full border border-neutral-700 text-white text-xs uppercase whitespace-nowrap">
+
+            {{ tag.name }}
+
+        </button>
+
+        {% endfor %}
+
+
+    </div>
+
+
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+
+
+        {% for product in products %}
+
+        <div>
+
+            <img src="{{ product.image.url }}"
+                 class="w-full h-[350px] object-cover rounded-xl">
+
+
+            <h2 class="text-white mt-4">
+                {{ product.name }}
+            </h2>
+
+        </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+</div>
+
+
+{% endblock %}

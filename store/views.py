@@ -843,3 +843,29 @@ def category_filter(request):
     return JsonResponse({
         "products": product_data
     })
+
+def category_products(request, slug):
+
+    category = get_object_or_404(
+        Category,
+        slug=slug
+    )
+
+    products = Product.objects.filter(
+        category=category
+    )
+
+    category_tags = ProductTag.objects.filter(
+        products__category=category
+    ).distinct().order_by("name")
+
+
+    return render(
+        request,
+        "store/category_products.html",
+        {
+            "category": category,
+            "products": products,
+            "tags": category_tags,
+        }
+    )
