@@ -44,6 +44,14 @@ class Product(models.Model):
         decimal_places=2
     )
 
+    original_price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        null=True,
+        blank=True,
+        help_text="Optional. Set this to show a strikethrough discount price (must be higher than the actual price)."
+    )
+
     description = models.TextField()
 
     image = models.ImageField(
@@ -98,7 +106,11 @@ class Product(models.Model):
                     break
 
         super().save(*args, **kwargs)
-
+    @property
+    def discount_percent(self):
+        if self.original_price and self.original_price > self.price:
+            return int(((self.original_price - self.price) / self.original_price) * 100)
+        return 0
 
     def __str__(self):
 
