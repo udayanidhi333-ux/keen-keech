@@ -176,38 +176,13 @@ overflow-hidden">
                                                     lg:h-[430px]
                                                     object-cover
                                                     transition-all duration-700
-                                                    group-hover:scale-105
-                                                    {% if product.stock <= 0 %}grayscale opacity-50{% endif %}">
+                                                    group-hover:scale-105">
 
                                     {% endif %}
 
                                 </a>
 
-                                {% if product.stock <= 0 %}
-
-                                <div class="absolute inset-0
-                                            flex items-center justify-center
-                                            bg-black/50
-                                            pointer-events-none">
-
-                                    <span class="px-4 py-1.5
-                                                 rounded-full
-                                                 border border-neutral-400
-                                                 bg-black/70
-                                                 text-white
-                                                 text-[10px]
-                                                 sm:text-xs
-                                                 uppercase
-                                                 tracking-[2px]
-                                                 font-semibold">
-
-                                        Out of Stock
-
-                                    </span>
-
-                                </div>
-
-                                {% endif %}
+                                
 
                             </div>
 
@@ -301,6 +276,32 @@ overflow-hidden">
                                     {% endif %}
 
                                 </div>
+
+                                {% if product.stock <= 0 %}
+
+                                <div class="mt-2">
+
+                                    <span class="inline-flex
+                                                 items-center
+                                                 px-3
+                                                 py-1
+                                                 rounded-full
+                                                 border border-red-500/40
+                                                 bg-red-500/10
+                                                 text-red-400
+                                                 text-[10px]
+                                                 sm:text-xs
+                                                 uppercase
+                                                 tracking-[2px]
+                                                 font-semibold">
+
+                                        Out of Stock
+
+                                    </span>
+
+                                </div>
+
+                                {% endif %}
 
 
                                 <a href="{% url 'product_detail' product.id %}"
