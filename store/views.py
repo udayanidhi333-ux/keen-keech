@@ -839,7 +839,6 @@ def category_filter(request):
             "name": product.name,
             "image": product.image.url if product.image else "",
             "price": str(product.price),
-            "product_code": product.product_code,
 
         })
 
@@ -866,8 +865,7 @@ def category_products(request, slug):
 
     if request.user.is_authenticated:
 
-        customer = get_object_or_404(
-            CustomerProfile,
+        customer, _ = CustomerProfile.objects.get_or_create(
             user=request.user
         )
 
