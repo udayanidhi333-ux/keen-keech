@@ -183,6 +183,7 @@ EMAIL_TIMEOUT = 2
 
 EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 
 # The sender address registered to your Brevo account profile
 DEFAULT_FROM_EMAIL = 'udayanidhi333@gmail.com'

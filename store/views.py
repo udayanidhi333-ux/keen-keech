@@ -402,6 +402,28 @@ def checkout(request):
             )
         except Exception as e:
             print(f"Order confirmation email failed: {e}")
+
+        try:
+            import requests
+            telegram_message = (
+                f"🛒 New Order Received!\n\n"
+                f"Order Number: {order.order_number}\n"
+                f"Customer: {customer_profile.name}\n"
+                f"Phone: {order.phone_number}\n"
+                f"Address: {order.shipping_address}\n\n"
+                f"Products:\n{items_text}\n"
+                f"Total Amount: ₹{order.total_amount}"
+            )
+            requests.post(
+                f"https://api.telegram.org/bot{settings.TELEGRAM_BOT_TOKEN}/sendMessage",
+                data={
+                    "chat_id": "8923435721",
+                    "text": telegram_message
+                },
+                timeout=5
+            )
+        except Exception as e:
+            print(f"Telegram notification failed: {e}")    
             
         # IMPORTANT: clear correct cart
         cart.items.all().delete()
