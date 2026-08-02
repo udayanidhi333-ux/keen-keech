@@ -838,6 +838,9 @@ def category_filter(request):
             "id": product.id,
             "name": product.name,
             "image": product.image.url if product.image else "",
+            "price": str(product.price),
+            "product_code": product.product_code,
+            
         })
 
     return JsonResponse({
