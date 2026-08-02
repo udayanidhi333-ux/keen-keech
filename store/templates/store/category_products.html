@@ -2,59 +2,358 @@
 
 {% block content %}
 
-<div class="max-w-7xl mx-auto px-4 py-20">
 
-    <h1 class="text-4xl text-white font-bold">
-        {{ category.name }}
-    </h1>
+<section class="bg-black min-h-screen py-20">
 
 
-    <div class="flex gap-3 mt-8 overflow-x-auto no-scrollbar">
-
-        <button class="px-5 py-2 rounded-full bg-gradient-to-r from-orange-500 to-yellow-500 text-black text-xs uppercase">
-            ALL
-        </button>
+<div class="max-w-7xl mx-auto px-4">
 
 
-        {% for tag in tags %}
+    <!-- HEADER -->
 
-        <button class="px-5 py-2 rounded-full border border-neutral-700 text-white text-xs uppercase whitespace-nowrap">
+    <div class="mb-12">
 
-            {{ tag.name }}
 
-        </button>
+        <p class="text-neutral-500 uppercase tracking-[5px] text-xs">
+            Collection
+        </p>
 
-        {% endfor %}
+
+        <h1 class="mt-4 text-4xl sm:text-5xl font-bold tracking-[6px] text-white">
+            {{ category.name }}
+        </h1>
 
 
     </div>
 
 
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+
+    <!-- TAG FILTER -->
+
+    <div class="mb-12">
 
 
-        {% for product in products %}
-
-        <div>
-
-            <img src="{{ product.image.url }}"
-                 class="w-full h-[350px] object-cover rounded-xl">
+        <div class="flex gap-3 overflow-x-auto no-scrollbar pb-3">
 
 
-            <h2 class="text-white mt-4">
-                {{ product.name }}
-            </h2>
+            <button
+
+                data-tag="all"
+
+                data-category="{{ category.id }}"
+
+                class="tag-filter
+                px-6 py-3
+                rounded-full
+                bg-gradient-to-r
+                from-orange-500
+                to-yellow-500
+                text-black
+                text-xs
+                uppercase
+                tracking-[2px]
+                font-semibold
+                whitespace-nowrap">
+
+                ALL
+
+            </button>
+
+
+
+            {% for tag in tags %}
+
+
+            <button
+
+                data-tag="{{ tag.id }}"
+
+                data-category="{{ category.id }}"
+
+                class="tag-filter
+                px-6 py-3
+                rounded-full
+                border
+                border-neutral-700
+                bg-[#171717]
+                text-neutral-300
+                hover:text-orange-400
+                hover:border-orange-500
+                transition
+                text-xs
+                uppercase
+                tracking-[2px]
+                whitespace-nowrap">
+
+
+                {{ tag.name }}
+
+
+            </button>
+
+
+            {% endfor %}
+
+
 
         </div>
 
 
-        {% endfor %}
+    </div>
+
+
+
+
+    <!-- PRODUCTS -->
+
+    <div
+
+    id="product-grid-{{ category.id }}"
+
+    class="grid grid-cols-2 lg:grid-cols-4 gap-x-5 gap-y-12">
+
+
+
+    {% for product in products %}
+
+
+
+        <div class="group">
+
+
+
+            <div class="relative overflow-hidden rounded-2xl bg-[#171717]">
+
+
+
+                <a href="{% url 'product_detail' product.id %}">
+
+
+
+                    {% if product.image %}
+
+
+                    <img
+
+                    src="{{ product.image.url }}"
+
+                    alt="{{ product.name }}"
+
+                    class="w-full
+                    h-[260px]
+                    sm:h-[360px]
+                    lg:h-[450px]
+                    object-cover
+                    transition duration-700
+                    group-hover:scale-105">
+
+
+                    {% endif %}
+
+
+
+                </a>
+
+
+
+            </div>
+
+
+
+
+            <div class="pt-5">
+
+
+
+                <a href="{% url 'product_detail' product.id %}">
+
+
+                    <h3
+
+                    class="text-white
+                    text-sm
+                    sm:text-base
+                    font-medium
+                    tracking-wide
+                    line-clamp-2">
+
+                    {{ product.name }}
+
+
+                    </h3>
+
+
+
+                </a>
+
+
+
+                {% if product.price %}
+
+
+                <p class="text-orange-400 mt-2 text-sm">
+
+                    ₹{{ product.price }}
+
+                </p>
+
+
+                {% endif %}
+
+
+
+            </div>
+
+
+
+
+        </div>
+
+
+
+    {% endfor %}
+
+
 
 
     </div>
 
 
+
 </div>
+
+
+</section>
+
+
+
+
+
+<script>
+
+
+document.querySelectorAll(".tag-filter").forEach(button => {
+
+
+
+button.addEventListener("click", function(){
+
+
+
+    const tag = this.dataset.tag;
+
+    const category = this.dataset.category;
+
+
+
+    fetch(
+        `/category-filter/?tag=${tag}&category=${category}`
+    )
+
+
+    .then(response => response.json())
+
+
+    .then(data => {
+
+
+
+        const grid = document.getElementById(
+            `product-grid-${category}`
+        );
+
+
+
+        grid.innerHTML = "";
+
+
+
+
+        data.products.forEach(product => {
+
+
+
+            grid.innerHTML += `
+
+
+            <div class="group">
+
+
+                <div class="relative overflow-hidden rounded-2xl bg-[#171717]">
+
+
+                    <a href="/product/${product.id}/">
+
+
+                        <img
+
+                        src="${product.image}"
+
+                        alt="${product.name}"
+
+                        class="w-full
+                        h-[260px]
+                        sm:h-[360px]
+                        lg:h-[450px]
+                        object-cover
+                        transition duration-700
+                        group-hover:scale-105">
+
+
+                    </a>
+
+
+                </div>
+
+
+
+
+                <div class="pt-5">
+
+
+                    <a href="/product/${product.id}/">
+
+
+                    <h3 class="text-white text-sm sm:text-base font-medium">
+
+                    ${product.name}
+
+                    </h3>
+
+
+                    </a>
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+            `;
+
+
+
+        });
+
+
+
+    });
+
+
+
+});
+
+
+
+});
+
+
+
+</script>
+
 
 
 {% endblock %}
