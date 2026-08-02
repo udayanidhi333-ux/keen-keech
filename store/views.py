@@ -840,7 +840,7 @@ def category_filter(request):
             "image": product.image.url if product.image else "",
             "price": str(product.price),
             "product_code": product.product_code,
-            
+
         })
 
     return JsonResponse({
@@ -862,6 +862,22 @@ def category_products(request, slug):
         products__category=category
     ).distinct().order_by("name")
 
+    wishlist_products = []
+
+    if request.user.is_authenticated:
+
+        customer = get_object_or_404(
+            CustomerProfile,
+            user=request.user
+        )
+
+        wishlist_products = Wishlist.objects.filter(
+            customer=customer
+        ).values_list(
+            "product_id",
+            flat=True
+        )
+
 
     return render(
         request,
@@ -870,5 +886,6 @@ def category_products(request, slug):
             "category": category,
             "products": products,
             "tags": category_tags,
+            "wishlist_products": wishlist_products,
         }
     )
