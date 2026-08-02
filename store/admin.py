@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import (
     Category,
+    ProductTag,
     Product,
     ProductImage,
     ProductVariant,
@@ -11,7 +12,6 @@ from .models import (
     Order,
     OrderItem
 )
-
 
 # ==========================================
 # PRODUCT IMAGE INLINE
@@ -74,6 +74,7 @@ class ProductAdmin(admin.ModelAdmin):
 
     list_filter = (
         "category",
+        "tags",
         "created_at",
     )
 
@@ -89,6 +90,10 @@ class ProductAdmin(admin.ModelAdmin):
     readonly_fields = (
         "product_code",
         "created_at",
+    )
+
+    filter_horizontal = (
+        "tags",
     )
 
     inlines = [
@@ -120,6 +125,32 @@ class CategoryAdmin(admin.ModelAdmin):
         )
     }
 
+
+# ==========================================
+# PRODUCT TAG ADMIN
+# ==========================================
+
+@admin.register(ProductTag)
+class ProductTagAdmin(admin.ModelAdmin):
+
+    list_display = (
+        "name",
+        "slug",
+    )
+
+    search_fields = (
+        "name",
+    )
+
+    prepopulated_fields = {
+        "slug": (
+            "name",
+        )
+    }
+
+    ordering = (
+        "name",
+    )
 
 # ==========================================
 # CUSTOMER PROFILE ADMIN

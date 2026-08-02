@@ -21,6 +21,22 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+class ProductTag(models.Model):
+    name = models.CharField(
+        max_length=50,
+        unique=True
+    )
+
+    slug = models.SlugField(
+        unique=True
+    )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name'] 
+
 class Product(models.Model):
 
     category = models.ForeignKey(
@@ -62,6 +78,12 @@ class Product(models.Model):
         default=0
     )
 
+    tags = models.ManyToManyField(
+        ProductTag,
+        blank=True,
+        related_name='products'
+    )
+    
     created_at = models.DateTimeField(
         auto_now_add=True
     )
