@@ -878,7 +878,7 @@ def category_products(request, slug):
     )
 
     category_tags = ProductTag.objects.filter(
-        product__category=category
+        products__category=category
     ).distinct().order_by("name")
 
     wishlist_products = []
