@@ -397,48 +397,47 @@ if (searchInput) {
 
         </button>
 
-
         <div id="categoryList"
             class="hidden pl-5 text-neutral-300">
 
 
-            <a href="?category=shirts"
+            <a href="{% url 'category_products' 'shirts' %}"
             class="block py-2 hover:text-orange-400">
                 Shirts
             </a>
 
 
-            <a href="?category=tshirts"
+            <a href="{% url 'category_products' 't-shirts' %}"
             class="block py-2 hover:text-orange-400">
                 T-Shirts
             </a>
 
 
-            <a href="?category=trousers"
+            <a href="{% url 'category_products' 'trousers' %}"
             class="block py-2 hover:text-orange-400">
                 Trousers
             </a>
 
 
-            <a href="?category=jeans"
+            <a href="{% url 'category_products' 'jeans' %}"
             class="block py-2 hover:text-orange-400">
                 Jeans
             </a>
 
 
-            <a href="?category=shorts"
+            <a href="{% url 'category_products' 'shorts' %}"
             class="block py-2 hover:text-orange-400">
                 Shorts
             </a>
 
 
-            <a href="?category=blazers"
+            <a href="{% url 'category_products' 'blazers' %}"
             class="block py-2 hover:text-orange-400">
                 Blazers
             </a>
 
 
-            <a href="?category=jackets"
+            <a href="{% url 'category_products' 'jackets' %}"
             class="block py-2 hover:text-orange-400">
                 Jackets
             </a>
