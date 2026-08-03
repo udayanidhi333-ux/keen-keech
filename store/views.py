@@ -87,7 +87,7 @@ def home(request):
         if category_items.exists():
 
             category_tags = ProductTag.objects.filter(
-                products__category=category
+                product__category=category
             ).distinct().order_by("name")
 
             category_sections.append({
@@ -878,7 +878,7 @@ def category_products(request, slug):
     )
 
     category_tags = ProductTag.objects.filter(
-        products__category=category
+        product__category=category
     ).distinct().order_by("name")
 
     wishlist_products = []
