@@ -822,7 +822,7 @@ def category_filter(request):
 
     products = Product.objects.filter(
         category_id=category_id
-    )
+    ).order_by("-id")
 
     if tag_id and tag_id != "all":
 
@@ -832,7 +832,7 @@ def category_filter(request):
 
     product_data = []
 
-    for product in products[:8]:
+    for product in products:
 
         product_data.append({
             "id": product.id,
@@ -840,8 +840,28 @@ def category_filter(request):
             "image": product.image.url if product.image else "",
             "price": str(product.price),
 
-        })
+            "original_price": (
+                str(product.original_price)
+                if product.original_price
+                else ""
+            ),
 
+            "discount_percent": (
+                product.discount_percent
+                if product.original_price
+                else 0
+            ),
+
+            "stock": product.stock,
+
+            "wishlist": (
+                request.user.is_authenticated
+                and Wishlist.objects.filter(
+                    customer__user=request.user,
+                    product=product
+                ).exists()
+            ),
+        })
     return JsonResponse({
         "products": product_data
     })
