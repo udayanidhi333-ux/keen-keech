@@ -87,7 +87,7 @@ def home(request):
         if category_items.exists():
 
             category_tags = ProductTag.objects.filter(
-                product__category=category
+                products__category=category
             ).distinct().order_by("name")
 
             category_sections.append({
