@@ -1,180 +1,150 @@
-                        <div class="group">
+<div class="group">
 
-                            <div class="relative overflow-hidden rounded-2xl bg-[#171717]">
+    <div class="relative overflow-hidden rounded-2xl bg-[#171717]">
 
-                                <a href="{% url 'product_detail' product.id %}">
+        <a href="{% url 'product_detail' product.id %}">
 
-                                    {% if product.image %}
+            {% if product.image %}
+                <img
+                    src="{{ product.image.url }}"
+                    alt="{{ product.name }}"
+                    class="w-full
+                           h-[250px]
+                           sm:h-[340px]
+                           lg:h-[430px]
+                           object-cover
+                           transition-all
+                           duration-700
+                           group-hover:scale-105">
+            {% endif %}
 
-                                        <img src="{{ product.image.url }}"
-                                            alt="{{ product.name }}"
-                                            class="w-full
-                                                    h-[250px]
-                                                    sm:h-[340px]
-                                                    lg:h-[430px]
-                                                    object-cover
-                                                    transition-all duration-700
-                                                    group-hover:scale-105">
+        </a>
 
-                                    {% endif %}
+    </div>
 
-                                </a>
+    <div class="pt-4">
 
-                                
+        <div class="flex items-start justify-between gap-3">
 
-                            </div>
+            <a href="{% url 'product_detail' product.id %}" class="flex-1">
 
+                <h3 class="text-white
+                           text-[12px]
+                           sm:text-[14px]
+                           font-medium
+                           leading-5
+                           tracking-wide
+                           line-clamp-2
+                           min-h-[40px]">
 
-                            <div class="pt-4">
+                    {{ product.name }}
 
-                                <div class="flex items-start justify-between gap-3">
+                </h3>
 
-                                    <a href="{% url 'product_detail' product.id %}"
-                                    class="flex-1">
+            </a>
 
-                                        <h3 class="text-white
-                                                text-[12px]
-                                                sm:text-[14px]
-                                                font-medium
-                                                leading-5
-                                                tracking-wide
-                                                line-clamp-2
-                                                min-h-[40px]">
+            {% if user.is_authenticated %}
 
-                                            {{ product.name }}
+                <a href="{% url 'add_to_wishlist' product.id %}#collection"
+                   class="flex-shrink-0 mt-1">
 
-                                        </h3>
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         viewBox="0 0 24 24"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         class="w-6 h-6 {% if product.id in wishlist_products %}fill-current text-red-500{% else %}fill-none text-neutral-400{% endif %}">
 
-                                    </a>
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 20.364 4.318 12.682a4.5 4.5 0 010-6.364z"/>
 
+                    </svg>
 
-                                    {% if user.is_authenticated %}
+                </a>
 
-                                        <a href="{% url 'add_to_wishlist' product.id %}#collection"
-                                        class="flex-shrink-0 mt-1">
+            {% endif %}
 
-                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 24 24"
-                                                stroke="currentColor"
-                                                stroke-width="2"
-                                                class="w-6 h-6
+        </div>
 
-                                                {% if product.id in wishlist_products %}
+        <div class="mt-2 flex items-center gap-2 flex-wrap">
 
-                                                    fill-current text-red-500
+            {% if product.original_price and product.original_price > product.price %}
 
-                                                {% else %}
+                <p class="text-neutral-500 text-[12px] sm:text-sm line-through">
+                    ₹{{ product.original_price }}
+                </p>
 
-                                                    fill-none text-neutral-400
+            {% endif %}
 
-                                                {% endif %}">
+            <p class="text-orange-400 text-[15px] sm:text-lg font-semibold">
+                ₹{{ product.price }}
+            </p>
 
-                                                <path stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 20.364 4.318 12.682a4.5 4.5 0 010-6.364z"/>
+            {% if product.original_price and product.original_price > product.price %}
 
-                                            </svg>
+                <span class="text-green-400 text-[10px] sm:text-xs font-semibold">
+                    {{ product.discount_percent }}% OFF
+                </span>
 
-                                        </a>
+            {% endif %}
 
-                                    {% endif %}
+        </div>
 
-                                </div>
+        {% if product.stock <= 0 %}
 
+            <div class="mt-2">
 
-                                <div class="mt-2 flex items-center gap-2 flex-wrap">
+                <span class="inline-flex
+                             items-center
+                             px-3
+                             py-1
+                             rounded-full
+                             border
+                             border-red-500/40
+                             bg-red-500/10
+                             text-red-400
+                             text-[10px]
+                             sm:text-xs
+                             uppercase
+                             tracking-[2px]
+                             font-semibold">
 
-                                    {% if product.original_price and product.original_price > product.price %}
+                    Out of Stock
 
-                                    <p class="text-neutral-500 text-[12px] sm:text-sm line-through">
-
-                                        ₹{{ product.original_price }}
-
-                                    </p>
-
-                                    {% endif %}
-
-                                    <p class="text-orange-400
-                                            text-[15px]
-                                            sm:text-lg
-                                            font-semibold">
-
-                                        ₹{{ product.price }}
-
-                                    </p>
-
-                                    {% if product.original_price and product.original_price > product.price %}
-
-                                    <span class="text-green-400 text-[10px] sm:text-xs font-semibold">
-
-                                        {{ product.discount_percent }}% OFF
-
-                                    </span>
-
-                                    {% endif %}
-
-                                </div>
-
-                                {% if product.stock <= 0 %}
-
-                                <div class="mt-2">
-
-                                    <span class="inline-flex
-                                                 items-center
-                                                 px-3
-                                                 py-1
-                                                 rounded-full
-                                                 border border-red-500/40
-                                                 bg-red-500/10
-                                                 text-red-400
-                                                 text-[10px]
-                                                 sm:text-xs
-                                                 uppercase
-                                                 tracking-[2px]
-                                                 font-semibold">
-
-                                        Out of Stock
-
-                                    </span>
-
-                                </div>
-
-                                {% endif %}
-
-
-                                <a href="{% url 'product_detail' product.id %}"
-                                class="mt-4
-                                        inline-flex
-                                        items-center
-                                        gap-2
-                                        px-4
-                                        py-2
-                                        rounded-full
-                                        border
-                                        border-yellow-500/30
-                                        bg-yellow-500/[0.04]
-                                        text-[10px]
-                                        sm:text-[11px]
-                                        uppercase
-                                        tracking-[2px]
-                                        text-yellow-200/80
-                                        transition-all
-                                        duration-500">
-
-                                    View Details
-
-                                    <span class="text-base">
-                                        →
-                                    </span>
-
-                                </a>
-
-                            </div>
-
-                        </div>
-
-                    {% endfor %}
-
-                </div>
+                </span>
 
             </div>
+
+        {% endif %}
+
+        <a href="{% url 'product_detail' product.id %}"
+           class="mt-4
+                  inline-flex
+                  items-center
+                  gap-2
+                  px-4
+                  py-2
+                  rounded-full
+                  border
+                  border-yellow-500/30
+                  bg-yellow-500/[0.04]
+                  text-[10px]
+                  sm:text-[11px]
+                  uppercase
+                  tracking-[2px]
+                  text-yellow-200/80
+                  transition-all
+                  duration-500">
+
+            View Details
+
+            <span class="text-base">
+                →
+            </span>
+
+        </a>
+
+    </div>
+
+</div>
